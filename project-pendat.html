@@ -1,0 +1,4166 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>GAUSSSIAN NAIVE BAYES CLASSIFICATION FOR PREDICTION DRY BEAN &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'project-pendat';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Notebooks with MyST Markdown" href="markdown-notebooks.html" />
+    <link rel="prev" title="Content with notebooks" href="notebooks.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="markdown.html">Markdown Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks.html">Content with notebooks</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">GAUSSSIAN NAIVE BAYES CLASSIFICATION FOR PREDICTION DRY BEAN</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fproject-pendat.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/project-pendat.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>GAUSSSIAN NAIVE BAYES CLASSIFICATION FOR PREDICTION DRY BEAN</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">GAUSSSIAN NAIVE BAYES CLASSIFICATION FOR PREDICTION DRY BEAN</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tujuan">TUJUAN</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-understanding">DATA UNDERSTANDING</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mengumpulkan-data">MENGUMPULKAN DATA</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mencari-data">Mencari Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menarik-data">Menarik Data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#memahami-data">MEMAHAMI DATA</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deskripsi-data">Deskripsi Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#penjelasan-fitur">Penjelasan Fitur</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-data">PLOTTING DATA</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-distribution">Data Distribution</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#d-distribution">2D Distribution</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-data">EKSPLORASI DATA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kualitas-data">KUALITAS DATA</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#missing-value">Missing Value</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#outlier-data">Outlier Data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preprocessing">DATA PREPROCESSING</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#local-outlier-factor">LOCAL OUTLIER FACTOR</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#konsep-local-outlier-factor">Konsep Local Outlier Factor</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#check-outlier">CHECK OUTLIER</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-modeling">DATA MODELING</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membagi-data-feature-dan-class">Membagi Data (feature dan class)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-train">Data Train</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-test">Data Test</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-naive-bayes-classification">GAUSSIAN NAIVE BAYES CLASSIFICATION</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k-nearest-neighboor">K-NEAREST NEIGHBOOR</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ensemble-learning">ENSEMBLE LEARNING</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stacking-classifier">STACKING CLASSIFIER</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#make-knn-model-with-n-3">Make KNN model with n = 3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#make-knn-model-with-n-5">Make KNN model with n = 5</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagging-classifier">BAGGING CLASSIFIER</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-sample-data-bootsrap">Membuat sample data bootsrap</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluasi">EVALUASI</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="gausssian-naive-bayes-classification-for-prediction-dry-bean">
+<h1>GAUSSSIAN NAIVE BAYES CLASSIFICATION FOR PREDICTION DRY BEAN<a class="headerlink" href="#gausssian-naive-bayes-classification-for-prediction-dry-bean" title="Link to this heading">#</a></h1>
+<p>Dry Beans atau kacang kering, adalah biji dari tanaman dalam keluarga Fabaceae yang dipanen setelah matang dan dikeringkan sebelum dimakan. Kacang kering adalah salah satu sumber utama protein nabati yang sangat penting untuk memenuhi kebutuhan gizi manusia. Kacang kering tidak hanya menyediakan energi yang dibutuhkan tubuh, tetapi juga kaya akan serat, vitamin, protein, dan mineral yang esensial. Ada berbagai jenis kacang kering dengan karakteristik unik yang membedakannya satu sama lain. Penelitian ini bertujuan untuk mengklasifikasikan jenis-jenis kacang kering berdasarkan identifikasi, pengelompokan, dan pemahaman yang diperoleh dari studi tersebut. Klasifikasi ini membantu peneliti memahami karakteristik khusus dari setiap jenis kacang kering, sehingga penggunaan mereka dalam kehidupan sehari-hari dapat lebih dioptimalkan</p>
+<section id="tujuan">
+<h2>TUJUAN<a class="headerlink" href="#tujuan" title="Link to this heading">#</a></h2>
+<p>Tujuan dari tugas kali ini adalah untuk mengevaluasi model mana yang lebih efektif dalam mengklasifikasikan tujuh jenis kacang kering yang berbeda. Ketujuh macam tersebut diantaranya yaitu Seker,
+Dermosan, Barbunya, Horoz, Bombay, Sira, dan Cali.</p>
+<p>Dengan begitu tugas ini diharapkan dapat memberikan wawasan dasar bagi petani, peneliti, dan produsen makanan dalam mengenali, mengelola, dan memanfaatkan berbagai jenis kacang kering secara lebih efisien. Selain itu, pemahaman yang lebih baik tentang klasifikasi kacang kering juga dapat membantu mengidentifikasi aspek-aspek seperti kualitas nutrisi, rasa, tekstur, dan nilai ekonomis kacang kering, yang pada akhirnya dapat memperluas pasar dan meningkatkan keuntungan.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">openpyxl</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting openpyxl
+  Downloading openpyxl-3.1.4-py2.py3-none-any.whl (251 kB)
+     ------------------------------------ 251.4/251.4 kB 467.3 kB/s eta 0:00:00
+Collecting et-xmlfile
+  Downloading et_xmlfile-1.1.0-py3-none-any.whl (4.7 kB)
+Installing collected packages: et-xmlfile, openpyxl
+Successfully installed et-xmlfile-1.1.0 openpyxl-3.1.4
+Note: you may need to restart the kernel to use updated packages.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[notice] A new release of pip available: 22.2.2 -&gt; 24.1
+[notice] To update, run: python.exe -m pip install --upgrade pip
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="kn">import</span> <span class="nn">joblib</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">LocalOutlierFactor</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">GaussianNB</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">StackingClassifier</span>
+<span class="c1"># from google.colab import files</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">5</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">joblib</span>
+<span class="ne">----&gt; </span><span class="mi">5</span> <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">LocalOutlierFactor</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;seaborn&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="data-understanding">
+<h1>DATA UNDERSTANDING<a class="headerlink" href="#data-understanding" title="Link to this heading">#</a></h1>
+<p>Data Understanding adalah tahap dalam proses analisis data yang bertujuan untuk memahami karakteristik, kualitas, dan struktur dari data yang akan digunakan. Pada bagian ini kita akan memahami data yang kita gunakan yaitu Dataset Dry Bean.</p>
+<section id="mengumpulkan-data">
+<h2>MENGUMPULKAN DATA<a class="headerlink" href="#mengumpulkan-data" title="Link to this heading">#</a></h2>
+<section id="mencari-data">
+<h3>Mencari Data<a class="headerlink" href="#mencari-data" title="Link to this heading">#</a></h3>
+<p>Tahapan pertama dalam melakukan understanding data adalah mencari data yang akan digunakan. Data yang kita gunakan adalah Dataset Dry Bean yang bersumber dari :</p>
+<p><a class="reference external" href="http://archive.ics.uci.edu/dataset/602/dry+bean+dataset">http://archive.ics.uci.edu/dataset/602/dry+bean+dataset</a></p>
+</section>
+<section id="menarik-data">
+<h3>Menarik Data<a class="headerlink" href="#menarik-data" title="Link to this heading">#</a></h3>
+<p>Setelah mendapatkan data maka kita akan mengupload data ke notebook yang kita gunakan.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s1">&#39;Notebook1/Dry_Bean_Dataset.xlsx&#39;</span><span class="p">)</span>
+
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Area</th>
+      <th>Perimeter</th>
+      <th>MajorAxisLength</th>
+      <th>MinorAxisLength</th>
+      <th>AspectRation</th>
+      <th>Eccentricity</th>
+      <th>ConvexArea</th>
+      <th>EquivDiameter</th>
+      <th>Extent</th>
+      <th>Solidity</th>
+      <th>roundness</th>
+      <th>Compactness</th>
+      <th>ShapeFactor1</th>
+      <th>ShapeFactor2</th>
+      <th>ShapeFactor3</th>
+      <th>ShapeFactor4</th>
+      <th>Class</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>28395</td>
+      <td>610.291</td>
+      <td>208.178117</td>
+      <td>173.888747</td>
+      <td>1.197191</td>
+      <td>0.549812</td>
+      <td>28715</td>
+      <td>190.141097</td>
+      <td>0.763923</td>
+      <td>0.988856</td>
+      <td>0.958027</td>
+      <td>0.913358</td>
+      <td>0.007332</td>
+      <td>0.003147</td>
+      <td>0.834222</td>
+      <td>0.998724</td>
+      <td>SEKER</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>28734</td>
+      <td>638.018</td>
+      <td>200.524796</td>
+      <td>182.734419</td>
+      <td>1.097356</td>
+      <td>0.411785</td>
+      <td>29172</td>
+      <td>191.272750</td>
+      <td>0.783968</td>
+      <td>0.984986</td>
+      <td>0.887034</td>
+      <td>0.953861</td>
+      <td>0.006979</td>
+      <td>0.003564</td>
+      <td>0.909851</td>
+      <td>0.998430</td>
+      <td>SEKER</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>29380</td>
+      <td>624.110</td>
+      <td>212.826130</td>
+      <td>175.931143</td>
+      <td>1.209713</td>
+      <td>0.562727</td>
+      <td>29690</td>
+      <td>193.410904</td>
+      <td>0.778113</td>
+      <td>0.989559</td>
+      <td>0.947849</td>
+      <td>0.908774</td>
+      <td>0.007244</td>
+      <td>0.003048</td>
+      <td>0.825871</td>
+      <td>0.999066</td>
+      <td>SEKER</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>30008</td>
+      <td>645.884</td>
+      <td>210.557999</td>
+      <td>182.516516</td>
+      <td>1.153638</td>
+      <td>0.498616</td>
+      <td>30724</td>
+      <td>195.467062</td>
+      <td>0.782681</td>
+      <td>0.976696</td>
+      <td>0.903936</td>
+      <td>0.928329</td>
+      <td>0.007017</td>
+      <td>0.003215</td>
+      <td>0.861794</td>
+      <td>0.994199</td>
+      <td>SEKER</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>30140</td>
+      <td>620.134</td>
+      <td>201.847882</td>
+      <td>190.279279</td>
+      <td>1.060798</td>
+      <td>0.333680</td>
+      <td>30417</td>
+      <td>195.896503</td>
+      <td>0.773098</td>
+      <td>0.990893</td>
+      <td>0.984877</td>
+      <td>0.970516</td>
+      <td>0.006697</td>
+      <td>0.003665</td>
+      <td>0.941900</td>
+      <td>0.999166</td>
+      <td>SEKER</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>13606</th>
+      <td>42097</td>
+      <td>759.696</td>
+      <td>288.721612</td>
+      <td>185.944705</td>
+      <td>1.552728</td>
+      <td>0.765002</td>
+      <td>42508</td>
+      <td>231.515799</td>
+      <td>0.714574</td>
+      <td>0.990331</td>
+      <td>0.916603</td>
+      <td>0.801865</td>
+      <td>0.006858</td>
+      <td>0.001749</td>
+      <td>0.642988</td>
+      <td>0.998385</td>
+      <td>DERMASON</td>
+    </tr>
+    <tr>
+      <th>13607</th>
+      <td>42101</td>
+      <td>757.499</td>
+      <td>281.576392</td>
+      <td>190.713136</td>
+      <td>1.476439</td>
+      <td>0.735702</td>
+      <td>42494</td>
+      <td>231.526798</td>
+      <td>0.799943</td>
+      <td>0.990752</td>
+      <td>0.922015</td>
+      <td>0.822252</td>
+      <td>0.006688</td>
+      <td>0.001886</td>
+      <td>0.676099</td>
+      <td>0.998219</td>
+      <td>DERMASON</td>
+    </tr>
+    <tr>
+      <th>13608</th>
+      <td>42139</td>
+      <td>759.321</td>
+      <td>281.539928</td>
+      <td>191.187979</td>
+      <td>1.472582</td>
+      <td>0.734065</td>
+      <td>42569</td>
+      <td>231.631261</td>
+      <td>0.729932</td>
+      <td>0.989899</td>
+      <td>0.918424</td>
+      <td>0.822730</td>
+      <td>0.006681</td>
+      <td>0.001888</td>
+      <td>0.676884</td>
+      <td>0.996767</td>
+      <td>DERMASON</td>
+    </tr>
+    <tr>
+      <th>13609</th>
+      <td>42147</td>
+      <td>763.779</td>
+      <td>283.382636</td>
+      <td>190.275731</td>
+      <td>1.489326</td>
+      <td>0.741055</td>
+      <td>42667</td>
+      <td>231.653248</td>
+      <td>0.705389</td>
+      <td>0.987813</td>
+      <td>0.907906</td>
+      <td>0.817457</td>
+      <td>0.006724</td>
+      <td>0.001852</td>
+      <td>0.668237</td>
+      <td>0.995222</td>
+      <td>DERMASON</td>
+    </tr>
+    <tr>
+      <th>13610</th>
+      <td>42159</td>
+      <td>772.237</td>
+      <td>295.142741</td>
+      <td>182.204716</td>
+      <td>1.619841</td>
+      <td>0.786693</td>
+      <td>42600</td>
+      <td>231.686223</td>
+      <td>0.788962</td>
+      <td>0.989648</td>
+      <td>0.888380</td>
+      <td>0.784997</td>
+      <td>0.007001</td>
+      <td>0.001640</td>
+      <td>0.616221</td>
+      <td>0.998180</td>
+      <td>DERMASON</td>
+    </tr>
+  </tbody>
+</table>
+<p>13611 rows × 17 columns</p>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="memahami-data">
+<h2>MEMAHAMI DATA<a class="headerlink" href="#memahami-data" title="Link to this heading">#</a></h2>
+<section id="deskripsi-data">
+<h3>Deskripsi Data<a class="headerlink" href="#deskripsi-data" title="Link to this heading">#</a></h3>
+<img src="_images/dry_bean.jpg" width="" align="" /><p>Dry Bean atau Kacang kering adalah biji tanaman dari keluarga fabaceae yang dipanen setelah matang dan dikeringkan sebelum dikonsumsi. Kacang kering merupakan sumber protein nabati yang tinggi dan penting untuk kebutuhan gizi manusia. Kacang ini menyediakan energi bagi tubuh karena kaya akan serat, vitamin, protein, dan mineral. Ada berbagai jenis kacang kering, masing-masing dengan karakteristik dan manfaat yang berbeda-beda.</p>
+<p>Berikut penjelasan dari ketujuh jenis dry bean yang digunakan pada Dataset kita:</p>
+<ul class="simple">
+<li><p>Seker adalah jenis kacang putih kecil dengan bentuk bulat. Kacang ini biasanya digunakan dalam masakan yang memerlukan waktu memasak singkat karena kulitnya yang tipis dan teksturnya yang lembut setelah dimasak. Seker sering ditemukan dalam sup atau salad sederhana, memberikan sentuhan halus pada hidangan.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Dermosan memiliki ukuran sedang dengan warna yang bisa bervariasi dari putih hingga abu-abu. Kacang ini lebih besar dan lebih keras dibandingkan Seker, membutuhkan waktu memasak yang lebih lama. Dermosan sangat cocok untuk hidangan yang dimasak secara perlahan seperti kacang oven atau semur, di mana teksturnya yang lebih padat dapat bertahan dalam proses memasak yang panjang.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Barbunya juga dikenal sebagai kacang cranberry atau borlotti, dikenal dengan kulitnya yang bercorak merah dan putih. Kacang ini berukuran sedang hingga besar dan memiliki rasa yang kaya serta tekstur krim setelah dimasak. Barbunya sering digunakan dalam masakan Mediterania dan Timur Tengah seperti salad dan sup, di mana tampilannya yang menarik dan rasa yang lezat menjadi bintang utama.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Horoz adalah kacang besar dengan warna kuning pucat hingga krem. Kacang ini memiliki tekstur padat dan sering kali memiliki rasa yang agak manis. Karena ukurannya yang besar dan teksturnya yang kokoh, Horoz sering digunakan dalam hidangan yang memerlukan waktu memasak lama, seperti kacang panggang atau stew.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Bombay, juga dikenal sebagai kacang kuda atau kacang Lima, memiliki bentuk yang besar dan pipih. Ukurannya yang besar dan teksturnya yang lembut seperti mentega, serta rasa yang sedikit manis, membuatnya ideal untuk sup kental atau sebagai pengganti protein dalam berbagai hidangan. Kacang Bombay sering menjadi pilihan utama untuk masakan yang mengutamakan kelembutan dan rasa manis alami.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Sira adalah jenis kacang yang kecil dan berwarna cokelat atau keabuan. Setelah dimasak, kacang ini memiliki tekstur yang lembut dan rasa yang netral, membuatnya serbaguna dalam berbagai hidangan. Sira biasanya digunakan dalam sup, salad, atau sebagai pelengkap dalam berbagai masakan, memberikan sentuhan lembut tanpa mengubah rasa utama hidangan.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Cali dikenal karena ukurannya yang besar dan warna yang bervariasi, mulai dari putih hingga krem. Kacang ini memiliki kulit tebal dan tekstur yang kenyal, serta rasa yang sedikit kacang. Cali sering digunakan dalam hidangan yang memerlukan waktu memasak lama seperti kacang panggang atau stew, di mana tekstur dan rasanya dapat memberikan kekayaan dan kedalaman pada hidangan.</p></li>
+</ul>
+<p>Pada dataset yang kita gunakan terdapat 13.611 data dan 16 fitur dengan 7 class dan tidak terdapat missing value pada tersebut. Pada semua fiturnya data menggunakan tipe data Numerical.</p>
+</section>
+<section id="penjelasan-fitur">
+<h3>Penjelasan Fitur<a class="headerlink" href="#penjelasan-fitur" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Area (Luas) (A): Ini adalah luas zona kacang yang diukur dalam piksel. Luas menunjukkan jumlah piksel yang termasuk dalam batas-batas kacang.</p></li>
+</ol>
+<ol class="arabic simple" start="2">
+<li><p>Perimeter (Keliling) (P): Keliling kacang didefinisikan sebagai panjang batas kacang tersebut. Ini adalah jumlah panjang dari garis yang mengelilingi kacang.</p></li>
+</ol>
+<ol class="arabic simple" start="3">
+<li><p>Major Axis Length (Panjang Sumbu Utama) (L): Panjang sumbu utama adalah jarak antara ujung-ujung dari garis terpanjang yang bisa digambar di dalam kacang. Garis ini biasanya mencerminkan dimensi terbesar dari kacang.</p></li>
+</ol>
+<ol class="arabic simple" start="4">
+<li><p>Minor Axis Length (Panjang Sumbu Minor) (l): Ini adalah jarak antara ujung-ujung dari garis terpanjang yang bisa digambar di dalam kacang dengan kondisi garis tersebut tegak lurus terhadap sumbu utama. Sumbu ini biasanya mencerminkan dimensi terkecil dari kacang yang tegak lurus terhadap sumbu utama.</p></li>
+</ol>
+<ol class="arabic simple" start="5">
+<li><p>Aspect Ratio (Rasio Aspek) (K): Rasio aspek mendefinisikan hubungan antara panjang sumbu utama (L) dan panjang sumbu minor (l). Ini adalah ukuran dari bentuk kacang, apakah lebih lonjong atau mendekati bentuk bulat.</p></li>
+</ol>
+<ol class="arabic simple" start="6">
+<li><p>Eccentricity (Eksentrisitas) (Ec): Eksentrisitas mengukur bagaimana bentuk kacang berbeda dari sebuah lingkaran. Ini adalah eksentrisitas dari elips yang memiliki momen yang sama dengan daerah kacang tersebut.</p></li>
+</ol>
+<ol class="arabic simple" start="7">
+<li><p>Convex Area (Luas Konveks) (C): Ini adalah jumlah piksel dalam poligon konveks terkecil yang bisa menutupi area kacang. Poligon konveks adalah poligon di mana semua sudutnya kurang dari 180 derajat.</p></li>
+</ol>
+<ol class="arabic simple" start="8">
+<li><p>Equivalent Diameter (Diameter Ekivalen) (Ed): Diameter ekivalen adalah diameter lingkaran yang memiliki luas yang sama dengan luas kacang. Ini memberikan cara untuk membandingkan luas kacang dengan ukuran lingkaran yang setara.</p></li>
+</ol>
+<ol class="arabic simple" start="9">
+<li><p>Extent (Ekstensi) (Ex): Ekstensi adalah rasio antara jumlah piksel dalam kotak pembatas kacang dan luas kacang. Kotak pembatas adalah persegi panjang terkecil yang bisa menutupi seluruh area kacang.</p></li>
+</ol>
+<ol class="arabic simple" start="10">
+<li><p>Solidity (Kepaduan) (S): Kepaduan, juga dikenal sebagai konveksitas, adalah rasio antara jumlah piksel dalam cangkang konveks (poligon konveks terkecil yang dapat mencakup kacang) dan jumlah piksel dalam kacang itu sendiri. Ini mengukur seberapa padat atau kompak bentuk kacang tersebut.</p></li>
+</ol>
+<ol class="arabic simple" start="11">
+<li><p>Roundness (Kebulatan) (R): Kebulatan dihitung dengan rumus (4piA)/(P^2) di mana A adalah luas dan P adalah keliling. Ini memberikan ukuran seberapa dekat bentuk kacang dengan bentuk lingkaran sempurna.</p></li>
+</ol>
+<ol class="arabic simple" start="12">
+<li><p>Compactness (Kekompakan) (CO): Kekompakan mengukur kebulatan dari suatu objek dengan rumus Ed/L di mana Ed adalah diameter ekivalen dan L adalah panjang sumbu utama. Ini memberikan indikasi seberapa kompak atau padat kacang itu dalam kaitannya dengan panjangnya.</p></li>
+</ol>
+<ol class="arabic simple" start="13">
+<li><p>ShapeFactor1 (Faktor Bentuk 1) (SF1): Ini adalah parameter yang digunakan untuk mengevaluasi bentuk kacang berdasarkan formula tertentu yang biasanya dikembangkan untuk mengukur karakteristik bentuk tertentu. Misalnya, SF1 dapat mencakup rasio luas terhadap keliling atau kombinasi lain dari parameter fisik.</p></li>
+</ol>
+<ol class="arabic simple" start="14">
+<li><p>ShapeFactor2 (Faktor Bentuk 2) (SF2): Sama seperti SF1, SF2 adalah parameter lain yang digunakan untuk mengevaluasi bentuk kacang. Setiap faktor bentuk ini memberikan perspektif tambahan tentang geometri dan proporsi kacang.</p></li>
+</ol>
+<ol class="arabic simple" start="15">
+<li><p>ShapeFactor3 (Faktor Bentuk 3) (SF3): SF3 adalah faktor tambahan yang memberikan informasi lebih lanjut tentang dimensi atau konfigurasi kacang. Ini membantu dalam pengklasifikasian bentuk berdasarkan karakteristik geometris.</p></li>
+</ol>
+<ol class="arabic simple" start="16">
+<li><p>ShapeFactor4 (Faktor Bentuk 4) (SF4): SF4 adalah faktor bentuk lainnya yang menganalisis karakteristik spesifik dari bentuk kacang. Faktor ini dapat mencakup berbagai kombinasi metrik bentuk yang unik untuk jenis analisis tertentu.</p></li>
+</ol>
+<ol class="arabic simple" start="17">
+<li><p>Class (Kelas): Ini adalah klasifikasi atau kategori kacang berdasarkan jenisnya. Dalam konteks ini, jenis-jenis kacang yang diklasifikasikan meliputi Seker, Barbunya, Bombay, Cali, Dermosan, Horoz, dan Sira. Setiap jenis memiliki karakteristik unik yang membedakan satu dari yang lain.</p></li>
+</ol>
+</section>
+</section>
+<section id="plotting-data">
+<h2>PLOTTING DATA<a class="headerlink" href="#plotting-data" title="Link to this heading">#</a></h2>
+<section id="data-distribution">
+<h3>Data Distribution<a class="headerlink" href="#data-distribution" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Area feature</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Area&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;hist&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Area&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">spines</span><span class="p">[[</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,]]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/ff09919394ead005738f6eea2192e09146994d3de9773ec55c9646ec65c44e01.png"><img alt="_images/ff09919394ead005738f6eea2192e09146994d3de9773ec55c9646ec65c44e01.png" src="_images/ff09919394ead005738f6eea2192e09146994d3de9773ec55c9646ec65c44e01.png" style="width: 580px; height: 435px;" /></a>
+</div>
+</div>
+<ul class="simple">
+<li><p>Perimeter Feature</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Perimeter&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;hist&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">spines</span><span class="p">[[</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,]]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/ccdca04a6fbd5aca8a0b79e62bd741fc39fb042864d9e364acdff15c626962bf.png"><img alt="_images/ccdca04a6fbd5aca8a0b79e62bd741fc39fb042864d9e364acdff15c626962bf.png" src="_images/ccdca04a6fbd5aca8a0b79e62bd741fc39fb042864d9e364acdff15c626962bf.png" style="width: 580px; height: 413px;" /></a>
+</div>
+</div>
+<ul class="simple">
+<li><p>Major Axis Lenght Feature</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;MajorAxisLength&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;hist&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;MajorAxisLength&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">spines</span><span class="p">[[</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,]]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/9ee6423579056e7bd9d44ab35b3ba9cdc18b36ca3598c2f5c9d932658b11158b.png"><img alt="_images/9ee6423579056e7bd9d44ab35b3ba9cdc18b36ca3598c2f5c9d932658b11158b.png" src="_images/9ee6423579056e7bd9d44ab35b3ba9cdc18b36ca3598c2f5c9d932658b11158b.png" style="width: 580px; height: 435px;" /></a>
+</div>
+</div>
+<ul class="simple">
+<li><p>Minor Axis lenght Feature</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;MinorAxisLength&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;hist&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;MinorAxisLength&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">spines</span><span class="p">[[</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,]]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/c8299a017647084b18176a8928e52b76c7a2fd5bf9d1efc4a262cb2109b4fe03.png"><img alt="_images/c8299a017647084b18176a8928e52b76c7a2fd5bf9d1efc4a262cb2109b4fe03.png" src="_images/c8299a017647084b18176a8928e52b76c7a2fd5bf9d1efc4a262cb2109b4fe03.png" style="width: 580px; height: 435px;" /></a>
+</div>
+</div>
+<ul class="simple">
+<li><p>Aspect Ratio Feature</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;AspectRation&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;hist&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;AspectRation&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">spines</span><span class="p">[[</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,]]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/1a031046f0c23c073d7eb18438b0b6f7ddafe51e8acfc5f371f53a096fdbcb3c.png"><img alt="_images/1a031046f0c23c073d7eb18438b0b6f7ddafe51e8acfc5f371f53a096fdbcb3c.png" src="_images/1a031046f0c23c073d7eb18438b0b6f7ddafe51e8acfc5f371f53a096fdbcb3c.png" style="width: 580px; height: 435px;" /></a>
+</div>
+</div>
+<ul class="simple">
+<li><p>Eccentricity Feature</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Eccentricity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;hist&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Eccentricity&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">spines</span><span class="p">[[</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,]]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/411854dc7fc5aac24ae3525bda29eecca89f345073939855209856a393c488e8.png"><img alt="_images/411854dc7fc5aac24ae3525bda29eecca89f345073939855209856a393c488e8.png" src="_images/411854dc7fc5aac24ae3525bda29eecca89f345073939855209856a393c488e8.png" style="width: 580px; height: 435px;" /></a>
+</div>
+</div>
+<ul class="simple">
+<li><p>Convex Area Feature</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;ConvexArea&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;hist&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;ConvexArea&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">spines</span><span class="p">[[</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,]]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/d34aef5c50eb3656212a47f188a20cdd725bb2f452cd4248fd759dc7bd5ad2d0.png"><img alt="_images/d34aef5c50eb3656212a47f188a20cdd725bb2f452cd4248fd759dc7bd5ad2d0.png" src="_images/d34aef5c50eb3656212a47f188a20cdd725bb2f452cd4248fd759dc7bd5ad2d0.png" style="width: 580px; height: 435px;" /></a>
+</div>
+</div>
+<ul class="simple">
+<li><p>Equiv Diameter Feature</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;EquivDiameter&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;hist&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;EquivDiameter&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">spines</span><span class="p">[[</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,]]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/a3b49ee5138a0ac105eeaf2f53c55dc73bbf01f0aeef41630f9c7c89799cb7bb.png"><img alt="_images/a3b49ee5138a0ac105eeaf2f53c55dc73bbf01f0aeef41630f9c7c89799cb7bb.png" src="_images/a3b49ee5138a0ac105eeaf2f53c55dc73bbf01f0aeef41630f9c7c89799cb7bb.png" style="width: 580px; height: 435px;" /></a>
+</div>
+</div>
+<ul class="simple">
+<li><p>Extent Feature</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Extent&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;hist&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Extent&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">spines</span><span class="p">[[</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,]]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/5277ff07f5336ac8aee457af635a2d6a527dc0bd06c37c4986db756c42549a0e.png"><img alt="_images/5277ff07f5336ac8aee457af635a2d6a527dc0bd06c37c4986db756c42549a0e.png" src="_images/5277ff07f5336ac8aee457af635a2d6a527dc0bd06c37c4986db756c42549a0e.png" style="width: 580px; height: 435px;" /></a>
+</div>
+</div>
+<ul class="simple">
+<li><p>Solidity Feature</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Solidity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;hist&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Solidity&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">spines</span><span class="p">[[</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,]]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/06c33de0915c7ae0146c46730a7719f071f1c41b7d67c49d84aee4737256d841.png"><img alt="_images/06c33de0915c7ae0146c46730a7719f071f1c41b7d67c49d84aee4737256d841.png" src="_images/06c33de0915c7ae0146c46730a7719f071f1c41b7d67c49d84aee4737256d841.png" style="width: 580px; height: 435px;" /></a>
+</div>
+</div>
+<ul class="simple">
+<li><p>Roundness Feature</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;roundness&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;hist&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;roundness&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">spines</span><span class="p">[[</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,]]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/30c6557ba8bc51c626dfc228f47c3a4a03686bff067ebfa02ebdee3f4d88d336.png"><img alt="_images/30c6557ba8bc51c626dfc228f47c3a4a03686bff067ebfa02ebdee3f4d88d336.png" src="_images/30c6557ba8bc51c626dfc228f47c3a4a03686bff067ebfa02ebdee3f4d88d336.png" style="width: 580px; height: 435px;" /></a>
+</div>
+</div>
+<ul class="simple">
+<li><p>Compactness Feature</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Compactness&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;hist&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Compactness&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">spines</span><span class="p">[[</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,]]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/92e0a7bfb8e48866ece646b273636ea1db0759d1663ee18d13b372e6492b2077.png"><img alt="_images/92e0a7bfb8e48866ece646b273636ea1db0759d1663ee18d13b372e6492b2077.png" src="_images/92e0a7bfb8e48866ece646b273636ea1db0759d1663ee18d13b372e6492b2077.png" style="width: 589px; height: 435px;" /></a>
+</div>
+</div>
+<ul class="simple">
+<li><p>Shape Factor 1 Feature</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShapeFactor1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;hist&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;ShapeFactor1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">spines</span><span class="p">[[</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,]]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/a0198b55ebcccaacb9dfb92fb2f45b8d8d0383ebd0387925a0770ef8271b0012.png"><img alt="_images/a0198b55ebcccaacb9dfb92fb2f45b8d8d0383ebd0387925a0770ef8271b0012.png" src="_images/a0198b55ebcccaacb9dfb92fb2f45b8d8d0383ebd0387925a0770ef8271b0012.png" style="width: 580px; height: 435px;" /></a>
+</div>
+</div>
+<ul class="simple">
+<li><p>Shape Factor 2 Feature</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShapeFactor2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;hist&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;ShapeFactor2&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">spines</span><span class="p">[[</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,]]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/f633314ee37fa049c353a477b18ccd506d942abd5ca98a4c1cf84e3043c850b1.png"><img alt="_images/f633314ee37fa049c353a477b18ccd506d942abd5ca98a4c1cf84e3043c850b1.png" src="_images/f633314ee37fa049c353a477b18ccd506d942abd5ca98a4c1cf84e3043c850b1.png" style="width: 580px; height: 435px;" /></a>
+</div>
+</div>
+<ul class="simple">
+<li><p>Shape Factor 3 Feature</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShapeFactor3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;hist&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;ShapeFactor3&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">spines</span><span class="p">[[</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,]]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/2526bd2894bda42b07b84c008ee33383a2e758c6440778008d4e146573bde8ad.png"><img alt="_images/2526bd2894bda42b07b84c008ee33383a2e758c6440778008d4e146573bde8ad.png" src="_images/2526bd2894bda42b07b84c008ee33383a2e758c6440778008d4e146573bde8ad.png" style="width: 589px; height: 435px;" /></a>
+</div>
+</div>
+<ul class="simple">
+<li><p>Shape Factor 4 Feature</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShapeFactor4&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;hist&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;ShapeFactor4&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">spines</span><span class="p">[[</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,]]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/6dc0a057a4ee6d21ef51183ef096197d967bbc34319bf511a630fb95eb106c7d.png"><img alt="_images/6dc0a057a4ee6d21ef51183ef096197d967bbc34319bf511a630fb95eb106c7d.png" src="_images/6dc0a057a4ee6d21ef51183ef096197d967bbc34319bf511a630fb95eb106c7d.png" style="width: 580px; height: 435px;" /></a>
+</div>
+</div>
+</section>
+<section id="d-distribution">
+<h3>2D Distribution<a class="headerlink" href="#d-distribution" title="Link to this heading">#</a></h3>
+<p>xx</p>
+</section>
+</section>
+<section id="eksplorasi-data">
+<h2>EKSPLORASI DATA<a class="headerlink" href="#eksplorasi-data" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Area&#39;</span><span class="p">,</span> <span class="s1">&#39;Perimeter&#39;</span><span class="p">,</span> <span class="s1">&#39;MajorAxisLength&#39;</span><span class="p">,</span> <span class="s1">&#39;MinorAxisLength&#39;</span><span class="p">,</span><span class="s1">&#39;AspectRation&#39;</span><span class="p">,</span> <span class="s1">&#39;Eccentricity&#39;</span><span class="p">,</span> <span class="s1">&#39;ConvexArea&#39;</span><span class="p">,</span><span class="s1">&#39;EquivDiameter&#39;</span><span class="p">,</span> <span class="s1">&#39;Extent&#39;</span><span class="p">,</span><span class="s1">&#39;Solidity&#39;</span><span class="p">,</span> <span class="s1">&#39;roundness&#39;</span><span class="p">,</span> <span class="s1">&#39;Compactness&#39;</span><span class="p">,</span> <span class="s1">&#39;ShapeFactor1&#39;</span><span class="p">,</span> <span class="s1">&#39;ShapeFactor2&#39;</span><span class="p">,</span> <span class="s1">&#39;ShapeFactor3&#39;</span><span class="p">,</span> <span class="s1">&#39;ShapeFactor4&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Area</th>
+      <th>Perimeter</th>
+      <th>MajorAxisLength</th>
+      <th>MinorAxisLength</th>
+      <th>AspectRation</th>
+      <th>Eccentricity</th>
+      <th>ConvexArea</th>
+      <th>EquivDiameter</th>
+      <th>Extent</th>
+      <th>Solidity</th>
+      <th>roundness</th>
+      <th>Compactness</th>
+      <th>ShapeFactor1</th>
+      <th>ShapeFactor2</th>
+      <th>ShapeFactor3</th>
+      <th>ShapeFactor4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>13611.000000</td>
+      <td>13611.000000</td>
+      <td>13611.000000</td>
+      <td>13611.000000</td>
+      <td>13611.000000</td>
+      <td>13611.000000</td>
+      <td>13611.000000</td>
+      <td>13611.000000</td>
+      <td>13611.000000</td>
+      <td>13611.000000</td>
+      <td>13611.000000</td>
+      <td>13611.000000</td>
+      <td>13611.000000</td>
+      <td>13611.000000</td>
+      <td>13611.000000</td>
+      <td>13611.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>53048.284549</td>
+      <td>855.283459</td>
+      <td>320.141867</td>
+      <td>202.270714</td>
+      <td>1.583242</td>
+      <td>0.750895</td>
+      <td>53768.200206</td>
+      <td>253.064220</td>
+      <td>0.749733</td>
+      <td>0.987143</td>
+      <td>0.873282</td>
+      <td>0.799864</td>
+      <td>0.006564</td>
+      <td>0.001716</td>
+      <td>0.643590</td>
+      <td>0.995063</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>29324.095717</td>
+      <td>214.289696</td>
+      <td>85.694186</td>
+      <td>44.970091</td>
+      <td>0.246678</td>
+      <td>0.092002</td>
+      <td>29774.915817</td>
+      <td>59.177120</td>
+      <td>0.049086</td>
+      <td>0.004660</td>
+      <td>0.059520</td>
+      <td>0.061713</td>
+      <td>0.001128</td>
+      <td>0.000596</td>
+      <td>0.098996</td>
+      <td>0.004366</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>20420.000000</td>
+      <td>524.736000</td>
+      <td>183.601165</td>
+      <td>122.512653</td>
+      <td>1.024868</td>
+      <td>0.218951</td>
+      <td>20684.000000</td>
+      <td>161.243764</td>
+      <td>0.555315</td>
+      <td>0.919246</td>
+      <td>0.489618</td>
+      <td>0.640577</td>
+      <td>0.002778</td>
+      <td>0.000564</td>
+      <td>0.410339</td>
+      <td>0.947687</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>36328.000000</td>
+      <td>703.523500</td>
+      <td>253.303633</td>
+      <td>175.848170</td>
+      <td>1.432307</td>
+      <td>0.715928</td>
+      <td>36714.500000</td>
+      <td>215.068003</td>
+      <td>0.718634</td>
+      <td>0.985670</td>
+      <td>0.832096</td>
+      <td>0.762469</td>
+      <td>0.005900</td>
+      <td>0.001154</td>
+      <td>0.581359</td>
+      <td>0.993703</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>44652.000000</td>
+      <td>794.941000</td>
+      <td>296.883367</td>
+      <td>192.431733</td>
+      <td>1.551124</td>
+      <td>0.764441</td>
+      <td>45178.000000</td>
+      <td>238.438026</td>
+      <td>0.759859</td>
+      <td>0.988283</td>
+      <td>0.883157</td>
+      <td>0.801277</td>
+      <td>0.006645</td>
+      <td>0.001694</td>
+      <td>0.642044</td>
+      <td>0.996386</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>61332.000000</td>
+      <td>977.213000</td>
+      <td>376.495012</td>
+      <td>217.031741</td>
+      <td>1.707109</td>
+      <td>0.810466</td>
+      <td>62294.000000</td>
+      <td>279.446467</td>
+      <td>0.786851</td>
+      <td>0.990013</td>
+      <td>0.916869</td>
+      <td>0.834270</td>
+      <td>0.007271</td>
+      <td>0.002170</td>
+      <td>0.696006</td>
+      <td>0.997883</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>254616.000000</td>
+      <td>1985.370000</td>
+      <td>738.860153</td>
+      <td>460.198497</td>
+      <td>2.430306</td>
+      <td>0.911423</td>
+      <td>263261.000000</td>
+      <td>569.374358</td>
+      <td>0.866195</td>
+      <td>0.994677</td>
+      <td>0.990685</td>
+      <td>0.987303</td>
+      <td>0.010451</td>
+      <td>0.003665</td>
+      <td>0.974767</td>
+      <td>0.999733</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Pada kode diatas kita dapat melihat deskripsi data, seperti banyak data, rata-rata, standar deviasi, nilai minimal, nilai maximal, median data pada tiap-tiap fiturnya.</p>
+</section>
+<section id="kualitas-data">
+<h2>KUALITAS DATA<a class="headerlink" href="#kualitas-data" title="Link to this heading">#</a></h2>
+<section id="missing-value">
+<h3>Missing Value<a class="headerlink" href="#missing-value" title="Link to this heading">#</a></h3>
+<p>Missing value atau data yang hilang adalah kondisi ketika suatu data yang seharusnya ada dalam dataset tidak tersedia atau tidak terisi. Fenomena ini sering muncul dalam analisis data dan bisa disebabkan oleh berbagai alasan, seperti kesalahan manusia saat memasukkan data, keterbatasan alat pengukur, atau responden yang tidak menjawab pertanyaan tertentu dalam survei.</p>
+<p>Pada dataset yang kita pakai kali ini tidak terdapat missing value. Untuk pengecekannya dapat dilihat pada kode berikut</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Area               0
+Perimeter          0
+MajorAxisLength    0
+MinorAxisLength    0
+AspectRation       0
+Eccentricity       0
+ConvexArea         0
+EquivDiameter      0
+Extent             0
+Solidity           0
+roundness          0
+Compactness        0
+ShapeFactor1       0
+ShapeFactor2       0
+ShapeFactor3       0
+ShapeFactor4       0
+Class              0
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Dikarenakan tidak terdapat missing value pada dataset kali ini, maka tidak perlu adanya penghapusan ataupun penginputan untuk missing value.</p>
+</section>
+<section id="outlier-data">
+<h3>Outlier Data<a class="headerlink" href="#outlier-data" title="Link to this heading">#</a></h3>
+<p>Outlier adalah nilai yang jauh berbeda dari nilai lainnya dalam kumpulan data. Nilai ini muncul sebagai pengecualian dalam pola data yang ada. Nilai yang ada di outlier bisa jauh lebih tinggi maupun lebih rendah dibandingkan dengan nilai-nilai lain dalam dataset. Outlier bisa terjadi karena berbagai alasan, termasuk kesalahan pengukuran, kejadian langka, atau karena faktor lain yang tidak terduga.</p>
+<p>Mendeteksi outlier merupakan langkah penting dalam analisis data karena outlier memiliki dampak signifikan terhadap hasil analisis dan berpotensi menghasilkan kesimpulan yang tidak akurat.</p>
+<p>berikut beberapa cara untuk mengatasi Outlier yang dapat dilakukan :
+Menghapus outlier
+Dalam beberapa situasi, penghapusan outlier merupakan pilihan paling tepat. Jika outlier merupakan hasil dari kesalahan input atau noise, penghapusan outlier akan meningkatkan akurasi analisis data. Namun, penting untuk berhati-hati saat menghapus outlier karena terkadang outlier justru bisa memberikan informasi penting.
+Imputasi
+Imputasi adalah proses penggantian nilai outlier dengan nilai lain. Nilai pengganti ini bisa berupa mean, median, atau modus dari kumpulan data. Namun harus digunakan dengan hati-hati karena bisa mengubah distribusi data.</p>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="data-preprocessing">
+<h1>DATA PREPROCESSING<a class="headerlink" href="#data-preprocessing" title="Link to this heading">#</a></h1>
+<section id="local-outlier-factor">
+<h2>LOCAL OUTLIER FACTOR<a class="headerlink" href="#local-outlier-factor" title="Link to this heading">#</a></h2>
+<section id="konsep-local-outlier-factor">
+<h3>Konsep Local Outlier Factor<a class="headerlink" href="#konsep-local-outlier-factor" title="Link to this heading">#</a></h3>
+<p>Algoritme Local Outlier Factor (LOF) adalah metode deteksi anomali tanpa pengawasan yang menghitung deviasi kepadatan lokal dari titik data tertentu terhadap titik data tetangganya. Ini menganggap sampel yang memiliki kepadatan jauh lebih rendah daripada sampel tetangganya sebagai outlier.
+LOF suatu titik didasarkan pada rasio kepadatan lokal daerah sekitar titik dan kepadatan lokal tetangganya. Ini mempertimbangkan kepadatan relatif titik data.
+Dengan kata sederhana, LOF membandingkan kepadatan lokal suatu titik dengan kepadatan lokal k-tetangga terdekatnya dan memberikan skor sebagai hasil akhir.</p>
+</section>
+</section>
+<section id="check-outlier">
+<h2>CHECK OUTLIER<a class="headerlink" href="#check-outlier" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mengurangi n_neighbors untuk LOF</span>
+<span class="n">lof</span> <span class="o">=</span> <span class="n">LocalOutlierFactor</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">lof_predict</span> <span class="o">=</span> <span class="n">lof</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;Class&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">outlier</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">lof_predict</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">outlier</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Area</th>
+      <th>Perimeter</th>
+      <th>MajorAxisLength</th>
+      <th>MinorAxisLength</th>
+      <th>AspectRation</th>
+      <th>Eccentricity</th>
+      <th>ConvexArea</th>
+      <th>EquivDiameter</th>
+      <th>Extent</th>
+      <th>Solidity</th>
+      <th>roundness</th>
+      <th>Compactness</th>
+      <th>ShapeFactor1</th>
+      <th>ShapeFactor2</th>
+      <th>ShapeFactor3</th>
+      <th>ShapeFactor4</th>
+      <th>Class</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3</th>
+      <td>30008</td>
+      <td>645.884</td>
+      <td>210.557999</td>
+      <td>182.516516</td>
+      <td>1.153638</td>
+      <td>0.498616</td>
+      <td>30724</td>
+      <td>195.467062</td>
+      <td>0.782681</td>
+      <td>0.976696</td>
+      <td>0.903936</td>
+      <td>0.928329</td>
+      <td>0.007017</td>
+      <td>0.003215</td>
+      <td>0.861794</td>
+      <td>0.994199</td>
+      <td>SEKER</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>31573</td>
+      <td>674.103</td>
+      <td>217.307026</td>
+      <td>185.448251</td>
+      <td>1.171793</td>
+      <td>0.521268</td>
+      <td>32197</td>
+      <td>200.499357</td>
+      <td>0.756965</td>
+      <td>0.980619</td>
+      <td>0.873119</td>
+      <td>0.922655</td>
+      <td>0.006883</td>
+      <td>0.003077</td>
+      <td>0.851292</td>
+      <td>0.997538</td>
+      <td>SEKER</td>
+    </tr>
+    <tr>
+      <th>107</th>
+      <td>33276</td>
+      <td>704.493</td>
+      <td>234.788138</td>
+      <td>180.705496</td>
+      <td>1.299286</td>
+      <td>0.638462</td>
+      <td>33857</td>
+      <td>205.835660</td>
+      <td>0.759657</td>
+      <td>0.982840</td>
+      <td>0.842534</td>
+      <td>0.876687</td>
+      <td>0.007056</td>
+      <td>0.002571</td>
+      <td>0.768580</td>
+      <td>0.998605</td>
+      <td>SEKER</td>
+    </tr>
+    <tr>
+      <th>136</th>
+      <td>33607</td>
+      <td>690.171</td>
+      <td>214.765297</td>
+      <td>199.524143</td>
+      <td>1.076388</td>
+      <td>0.369996</td>
+      <td>34162</td>
+      <td>206.856862</td>
+      <td>0.770803</td>
+      <td>0.983754</td>
+      <td>0.886597</td>
+      <td>0.963176</td>
+      <td>0.006390</td>
+      <td>0.003393</td>
+      <td>0.927709</td>
+      <td>0.998574</td>
+      <td>SEKER</td>
+    </tr>
+    <tr>
+      <th>214</th>
+      <td>34483</td>
+      <td>687.567</td>
+      <td>233.740724</td>
+      <td>188.587866</td>
+      <td>1.239426</td>
+      <td>0.590790</td>
+      <td>35051</td>
+      <td>209.535484</td>
+      <td>0.740678</td>
+      <td>0.983795</td>
+      <td>0.916611</td>
+      <td>0.896444</td>
+      <td>0.006778</td>
+      <td>0.002700</td>
+      <td>0.803612</td>
+      <td>0.996018</td>
+      <td>SEKER</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>13326</th>
+      <td>39127</td>
+      <td>768.735</td>
+      <td>268.896736</td>
+      <td>186.719676</td>
+      <td>1.440109</td>
+      <td>0.719597</td>
+      <td>39977</td>
+      <td>223.199560</td>
+      <td>0.790828</td>
+      <td>0.978738</td>
+      <td>0.832019</td>
+      <td>0.830057</td>
+      <td>0.006872</td>
+      <td>0.002012</td>
+      <td>0.688994</td>
+      <td>0.992227</td>
+      <td>DERMASON</td>
+    </tr>
+    <tr>
+      <th>13346</th>
+      <td>39303</td>
+      <td>746.675</td>
+      <td>275.468861</td>
+      <td>184.335498</td>
+      <td>1.494389</td>
+      <td>0.743109</td>
+      <td>40311</td>
+      <td>223.700992</td>
+      <td>0.746000</td>
+      <td>0.974994</td>
+      <td>0.885875</td>
+      <td>0.812074</td>
+      <td>0.007009</td>
+      <td>0.001880</td>
+      <td>0.659464</td>
+      <td>0.985495</td>
+      <td>DERMASON</td>
+    </tr>
+    <tr>
+      <th>13425</th>
+      <td>39949</td>
+      <td>763.431</td>
+      <td>264.160174</td>
+      <td>193.661698</td>
+      <td>1.364029</td>
+      <td>0.680097</td>
+      <td>40617</td>
+      <td>225.531919</td>
+      <td>0.757069</td>
+      <td>0.983554</td>
+      <td>0.861343</td>
+      <td>0.853770</td>
+      <td>0.006612</td>
+      <td>0.002167</td>
+      <td>0.728922</td>
+      <td>0.994271</td>
+      <td>DERMASON</td>
+    </tr>
+    <tr>
+      <th>13493</th>
+      <td>40690</td>
+      <td>760.969</td>
+      <td>290.702356</td>
+      <td>180.494583</td>
+      <td>1.610588</td>
+      <td>0.783897</td>
+      <td>41649</td>
+      <td>227.613965</td>
+      <td>0.672395</td>
+      <td>0.976974</td>
+      <td>0.883006</td>
+      <td>0.782979</td>
+      <td>0.007144</td>
+      <td>0.001656</td>
+      <td>0.613057</td>
+      <td>0.987382</td>
+      <td>DERMASON</td>
+    </tr>
+    <tr>
+      <th>13587</th>
+      <td>41888</td>
+      <td>789.822</td>
+      <td>299.271436</td>
+      <td>179.534078</td>
+      <td>1.666934</td>
+      <td>0.800072</td>
+      <td>42668</td>
+      <td>230.940378</td>
+      <td>0.669202</td>
+      <td>0.981719</td>
+      <td>0.843803</td>
+      <td>0.771675</td>
+      <td>0.007145</td>
+      <td>0.001563</td>
+      <td>0.595483</td>
+      <td>0.992630</td>
+      <td>DERMASON</td>
+    </tr>
+  </tbody>
+</table>
+<p>518 rows × 17 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Membuang outlier</span>
+<span class="n">df_cleaned</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">outlier</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">df_cleaned</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;Class&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df_cleaned</span><span class="p">[</span><span class="s1">&#39;Class&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_cleaned</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Area</th>
+      <th>Perimeter</th>
+      <th>MajorAxisLength</th>
+      <th>MinorAxisLength</th>
+      <th>AspectRation</th>
+      <th>Eccentricity</th>
+      <th>ConvexArea</th>
+      <th>EquivDiameter</th>
+      <th>Extent</th>
+      <th>Solidity</th>
+      <th>roundness</th>
+      <th>Compactness</th>
+      <th>ShapeFactor1</th>
+      <th>ShapeFactor2</th>
+      <th>ShapeFactor3</th>
+      <th>ShapeFactor4</th>
+      <th>Class</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>28395</td>
+      <td>610.291</td>
+      <td>208.178117</td>
+      <td>173.888747</td>
+      <td>1.197191</td>
+      <td>0.549812</td>
+      <td>28715</td>
+      <td>190.141097</td>
+      <td>0.763923</td>
+      <td>0.988856</td>
+      <td>0.958027</td>
+      <td>0.913358</td>
+      <td>0.007332</td>
+      <td>0.003147</td>
+      <td>0.834222</td>
+      <td>0.998724</td>
+      <td>SEKER</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>28734</td>
+      <td>638.018</td>
+      <td>200.524796</td>
+      <td>182.734419</td>
+      <td>1.097356</td>
+      <td>0.411785</td>
+      <td>29172</td>
+      <td>191.272750</td>
+      <td>0.783968</td>
+      <td>0.984986</td>
+      <td>0.887034</td>
+      <td>0.953861</td>
+      <td>0.006979</td>
+      <td>0.003564</td>
+      <td>0.909851</td>
+      <td>0.998430</td>
+      <td>SEKER</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>29380</td>
+      <td>624.110</td>
+      <td>212.826130</td>
+      <td>175.931143</td>
+      <td>1.209713</td>
+      <td>0.562727</td>
+      <td>29690</td>
+      <td>193.410904</td>
+      <td>0.778113</td>
+      <td>0.989559</td>
+      <td>0.947849</td>
+      <td>0.908774</td>
+      <td>0.007244</td>
+      <td>0.003048</td>
+      <td>0.825871</td>
+      <td>0.999066</td>
+      <td>SEKER</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>30140</td>
+      <td>620.134</td>
+      <td>201.847882</td>
+      <td>190.279279</td>
+      <td>1.060798</td>
+      <td>0.333680</td>
+      <td>30417</td>
+      <td>195.896503</td>
+      <td>0.773098</td>
+      <td>0.990893</td>
+      <td>0.984877</td>
+      <td>0.970516</td>
+      <td>0.006697</td>
+      <td>0.003665</td>
+      <td>0.941900</td>
+      <td>0.999166</td>
+      <td>SEKER</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>30279</td>
+      <td>634.927</td>
+      <td>212.560556</td>
+      <td>181.510182</td>
+      <td>1.171067</td>
+      <td>0.520401</td>
+      <td>30600</td>
+      <td>196.347702</td>
+      <td>0.775688</td>
+      <td>0.989510</td>
+      <td>0.943852</td>
+      <td>0.923726</td>
+      <td>0.007020</td>
+      <td>0.003153</td>
+      <td>0.853270</td>
+      <td>0.999236</td>
+      <td>SEKER</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>13088</th>
+      <td>42097</td>
+      <td>759.696</td>
+      <td>288.721612</td>
+      <td>185.944705</td>
+      <td>1.552728</td>
+      <td>0.765002</td>
+      <td>42508</td>
+      <td>231.515799</td>
+      <td>0.714574</td>
+      <td>0.990331</td>
+      <td>0.916603</td>
+      <td>0.801865</td>
+      <td>0.006858</td>
+      <td>0.001749</td>
+      <td>0.642988</td>
+      <td>0.998385</td>
+      <td>DERMASON</td>
+    </tr>
+    <tr>
+      <th>13089</th>
+      <td>42101</td>
+      <td>757.499</td>
+      <td>281.576392</td>
+      <td>190.713136</td>
+      <td>1.476439</td>
+      <td>0.735702</td>
+      <td>42494</td>
+      <td>231.526798</td>
+      <td>0.799943</td>
+      <td>0.990752</td>
+      <td>0.922015</td>
+      <td>0.822252</td>
+      <td>0.006688</td>
+      <td>0.001886</td>
+      <td>0.676099</td>
+      <td>0.998219</td>
+      <td>DERMASON</td>
+    </tr>
+    <tr>
+      <th>13090</th>
+      <td>42139</td>
+      <td>759.321</td>
+      <td>281.539928</td>
+      <td>191.187979</td>
+      <td>1.472582</td>
+      <td>0.734065</td>
+      <td>42569</td>
+      <td>231.631261</td>
+      <td>0.729932</td>
+      <td>0.989899</td>
+      <td>0.918424</td>
+      <td>0.822730</td>
+      <td>0.006681</td>
+      <td>0.001888</td>
+      <td>0.676884</td>
+      <td>0.996767</td>
+      <td>DERMASON</td>
+    </tr>
+    <tr>
+      <th>13091</th>
+      <td>42147</td>
+      <td>763.779</td>
+      <td>283.382636</td>
+      <td>190.275731</td>
+      <td>1.489326</td>
+      <td>0.741055</td>
+      <td>42667</td>
+      <td>231.653248</td>
+      <td>0.705389</td>
+      <td>0.987813</td>
+      <td>0.907906</td>
+      <td>0.817457</td>
+      <td>0.006724</td>
+      <td>0.001852</td>
+      <td>0.668237</td>
+      <td>0.995222</td>
+      <td>DERMASON</td>
+    </tr>
+    <tr>
+      <th>13092</th>
+      <td>42159</td>
+      <td>772.237</td>
+      <td>295.142741</td>
+      <td>182.204716</td>
+      <td>1.619841</td>
+      <td>0.786693</td>
+      <td>42600</td>
+      <td>231.686223</td>
+      <td>0.788962</td>
+      <td>0.989648</td>
+      <td>0.888380</td>
+      <td>0.784997</td>
+      <td>0.007001</td>
+      <td>0.001640</td>
+      <td>0.616221</td>
+      <td>0.998180</td>
+      <td>DERMASON</td>
+    </tr>
+  </tbody>
+</table>
+<p>13093 rows × 17 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Standarisasi data</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">x_joblib</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">x_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">x_joblib</span><span class="p">,</span> <span class="s1">&#39;Notebook1/Stacking/scaler.joblib&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;Notebook1/Stacking/scaler.joblib&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="data-modeling">
+<h1>DATA MODELING<a class="headerlink" href="#data-modeling" title="Link to this heading">#</a></h1>
+<section id="membagi-data-feature-dan-class">
+<h2>Membagi Data (feature dan class)<a class="headerlink" href="#membagi-data-feature-dan-class" title="Link to this heading">#</a></h2>
+<p>Membagi data menjadi data train dan data test dilakukan untuk menguji kemampuan generalisasi model. Dengan memisahkan dataset, kita dapat melatih model pada data train dan menguji performanya pada data test. Selain itu, pembagian data memungkinkan kita untuk membandingkan dan memilih model terbaik secara objektif serta meningkatkan kehandalan evaluasi model. Dengan demikian, pembagian data adalah praktik penting untuk memastikan hasil model yang kredibel dan dapat diandalkan.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Membagi data menjadi training dan testing</span>
+<span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">x_scaled</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="data-train">
+<h2>Data Train<a class="headerlink" href="#data-train" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_train</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 0.19704964,  0.35015972,  0.05617144, ..., -0.00393874,
+         0.66777138,  0.23783735],
+       [-0.16302601, -0.1827685 , -0.25986771, ...,  0.18720911,
+         0.50337474,  0.17343801],
+       [-0.74399843, -0.88151849, -0.91639569, ...,  0.85037247,
+         0.40013683, -1.59132838],
+       ...,
+       [ 0.50126322,  0.71673195,  0.71699412, ..., -0.83879696,
+        -0.52562346, -2.94295619],
+       [ 0.30346656,  0.6357489 ,  0.19257625, ..., -0.1572881 ,
+         0.53044917, -2.20231517],
+       [ 0.76567252,  1.49691095,  1.02328821, ..., -1.01816415,
+        -0.6745321 ,  0.04274435]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_train</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2152     BARBUNYA
+9109         SIRA
+11210    DERMASON
+11743    DERMASON
+9709     DERMASON
+           ...   
+3046     BARBUNYA
+9917     DERMASON
+4079         CALI
+2254     BARBUNYA
+2915     BARBUNYA
+Name: Class, Length: 10474, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="data-test">
+<h2>Data Test<a class="headerlink" href="#data-test" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_test</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[-0.6256062 , -0.86057244, -1.0213787 , ...,  1.76871457,
+         1.7817728 ,  0.78850431],
+       [-0.37997636, -0.36473764, -0.30326084, ..., -0.11471772,
+        -0.26795287, -0.80145849],
+       [ 0.0958379 ,  0.19816262,  0.26094031, ..., -0.54963414,
+        -0.38047488,  0.32767314],
+       ...,
+       [-0.39164548, -0.3987233 , -0.19683286, ..., -0.37864566,
+        -0.68866   ,  0.59811657],
+       [-0.35857731, -0.49160784, -0.56365531, ...,  0.68088361,
+         0.9177502 ,  0.8549021 ],
+       [ 0.28591185,  0.54803468,  0.50411297, ..., -0.73483717,
+        -0.52289924,  0.84621019]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_test</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>242         SEKER
+7805         SIRA
+3798         CALI
+10159    DERMASON
+3249     BARBUNYA
+           ...   
+6251        HOROZ
+1504        SEKER
+13052    DERMASON
+1481        SEKER
+2232     BARBUNYA
+Name: Class, Length: 2619, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="gaussian-naive-bayes-classification">
+<h2>GAUSSIAN NAIVE BAYES CLASSIFICATION<a class="headerlink" href="#gaussian-naive-bayes-classification" title="Link to this heading">#</a></h2>
+<p>Gaussian Naive Bayes merupakan teknik klasisifkasi yang digunakan dalam machine learning dengan menggunakan metode probability dan distribusi gaussian atau distribusi normal. Pada distribusi gaussian tiap fitur data memiliki pengaruh yang independent dalam meprediksi target. Prediksi akhir didapat dari kombinasi predikasi seluruh parameter dengan probability dari target yang diklasifikasikan kedalam dua kelas. Klasifikasi akhirnya adalah hasil probability yang lebih tinggi dari group target.</p>
+<p>Tujuan metode ini adalah mengklasifikasikan probabilitas berdasarkan pembelajaran mesin atas probabilitas lain.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">classifier</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
+<span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># data baru yang akan di klasifikasikan</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">df_cleaned</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()[</span><span class="mi">2</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+<span class="n">new_data_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">new_data_scaled</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Data </span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Termasuk ke dalam Species: </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Evaluasi performa</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Akurasi model :&quot;</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Data [[29380, 624.11, 212.82612986020646, 175.93114261271373, 1.209712656324364, 0.5627273167504117, 29690, 193.41090409881002, 0.7781132475237036, 0.9895587739979791, 0.9478494730164112, 0.9087742385103313, 0.007243911840034257, 0.003047733217213173, 0.8258706165800325, 0.9990661373632715]]
+Termasuk ke dalam Species: [&#39;SEKER&#39;]
+Akurasi model : 0.9022527682321497
+/shared-libs/python3.9/py/lib/python3.9/site-packages/sklearn/base.py:450: UserWarning: X does not have valid feature names, but StandardScaler was fitted with feature names
+  warnings.warn(
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="k-nearest-neighboor">
+<h2>K-NEAREST NEIGHBOOR<a class="headerlink" href="#k-nearest-neighboor" title="Link to this heading">#</a></h2>
+<p>Algoritma K-Nearest Neighbor (KNN) adalah algoritma machine learning yang bersifat non-parametric dan lazy learning. Metode yang bersifat non-parametric memiliki makna bahwa metode tersebut tidak membuat asumsi apa pun tentang distribusi data yang mendasarinya. Dengan kata lain, tidak ada jumlah parameter atau estimasi parameter yang tetap dalam model, terlepas data tersebut berukuran kecil ataupun besar. Tujuan dari algoritma k-nearest neighbor adalah untuk mengidentifikasi tetangga terdekat dari titik kueri yang diberikan, sehingga kita dapat menetapkan label kelas ke titik tersebut.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">classifier</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+
+<span class="n">classifier</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9240168003054601
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ensemble-learning">
+<h1>ENSEMBLE LEARNING<a class="headerlink" href="#ensemble-learning" title="Link to this heading">#</a></h1>
+<p>Ensemble Learning dalam pembelajaran mesin menggabungkan beberapa model individual untuk menciptakan model prediktif yang lebih kuat dan akurat. Dengan memanfaatkan beragam kekuatan model yang berbeda, pembelajaran ansambel bertujuan untuk mengurangi kesalahan, meningkatkan kinerja, dan meningkatkan ketahanan prediksi secara keseluruhan, sehingga menghasilkan hasil yang lebih baik di berbagai tugas dalam pembelajaran mesin dan analisis data.</p>
+<section id="stacking-classifier">
+<h2>STACKING CLASSIFIER<a class="headerlink" href="#stacking-classifier" title="Link to this heading">#</a></h2>
+<img src="_images/stacking.png" width="" align="" /><section id="make-knn-model-with-n-3">
+<h3>Make KNN model with n = 3<a class="headerlink" href="#make-knn-model-with-n-3" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clf_n_3</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">clf_n_3</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">clf_n_3</span><span class="p">,</span> <span class="s1">&#39;Notebook1/Stacking/knn_3.joblib&#39;</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">clf_n_3</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_train</span><span class="p">)</span>
+
+<span class="n">result_n_3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;P1&#39;</span><span class="p">])</span>
+
+<span class="n">result_n_3</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>P1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>BARBUNYA</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>SIRA</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>DERMASON</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>DERMASON</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>DERMASON</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>10469</th>
+      <td>BARBUNYA</td>
+    </tr>
+    <tr>
+      <th>10470</th>
+      <td>DERMASON</td>
+    </tr>
+    <tr>
+      <th>10471</th>
+      <td>CALI</td>
+    </tr>
+    <tr>
+      <th>10472</th>
+      <td>BARBUNYA</td>
+    </tr>
+    <tr>
+      <th>10473</th>
+      <td>BARBUNYA</td>
+    </tr>
+  </tbody>
+</table>
+<p>10474 rows × 1 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="make-knn-model-with-n-5">
+<h3>Make KNN model with n = 5<a class="headerlink" href="#make-knn-model-with-n-5" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clf_n_5</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="n">clf_n_5</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">clf_n_5</span><span class="p">,</span> <span class="s1">&#39;Notebook1/Stacking/knn_5.joblib&#39;</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">clf_n_5</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_train</span><span class="p">)</span>
+
+<span class="n">result_n_5</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;P2&#39;</span><span class="p">])</span>
+
+<span class="n">result_n_5</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>P2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>BARBUNYA</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>SIRA</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>DERMASON</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>DERMASON</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>DERMASON</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>10469</th>
+      <td>BARBUNYA</td>
+    </tr>
+    <tr>
+      <th>10470</th>
+      <td>DERMASON</td>
+    </tr>
+    <tr>
+      <th>10471</th>
+      <td>CALI</td>
+    </tr>
+    <tr>
+      <th>10472</th>
+      <td>BARBUNYA</td>
+    </tr>
+    <tr>
+      <th>10473</th>
+      <td>BARBUNYA</td>
+    </tr>
+  </tbody>
+</table>
+<p>10474 rows × 1 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_combined</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">result_n_3</span><span class="p">,</span> <span class="n">result_n_5</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">x_combined</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>P1</th>
+      <th>P2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>BARBUNYA</td>
+      <td>BARBUNYA</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>SIRA</td>
+      <td>SIRA</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>DERMASON</td>
+      <td>DERMASON</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>DERMASON</td>
+      <td>DERMASON</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>DERMASON</td>
+      <td>DERMASON</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>10469</th>
+      <td>BARBUNYA</td>
+      <td>BARBUNYA</td>
+    </tr>
+    <tr>
+      <th>10470</th>
+      <td>DERMASON</td>
+      <td>DERMASON</td>
+    </tr>
+    <tr>
+      <th>10471</th>
+      <td>CALI</td>
+      <td>CALI</td>
+    </tr>
+    <tr>
+      <th>10472</th>
+      <td>BARBUNYA</td>
+      <td>BARBUNYA</td>
+    </tr>
+    <tr>
+      <th>10473</th>
+      <td>BARBUNYA</td>
+      <td>BARBUNYA</td>
+    </tr>
+  </tbody>
+</table>
+<p>10474 rows × 2 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">x_combined</span><span class="p">,</span><span class="n">prefix</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;P1&quot;</span><span class="p">,</span><span class="s2">&quot;P2&quot;</span><span class="p">],</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;P1&quot;</span><span class="p">,</span><span class="s2">&quot;P2&quot;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
+
+<span class="n">X</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>P1_BARBUNYA</th>
+      <th>P1_BOMBAY</th>
+      <th>P1_CALI</th>
+      <th>P1_DERMASON</th>
+      <th>P1_HOROZ</th>
+      <th>P1_SEKER</th>
+      <th>P1_SIRA</th>
+      <th>P2_BARBUNYA</th>
+      <th>P2_BOMBAY</th>
+      <th>P2_CALI</th>
+      <th>P2_DERMASON</th>
+      <th>P2_HOROZ</th>
+      <th>P2_SEKER</th>
+      <th>P2_SIRA</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>10469</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>10470</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>10471</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>10472</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>10473</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>10474 rows × 14 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clf_nb</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
+
+<span class="n">clf_nb</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">clf_nb</span><span class="p">,</span> <span class="s1">&#39;Notebook1/Stacking/meta_clf.joblib&#39;</span><span class="p">)</span>
+
+<span class="n">clf_nb</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9486347145312202
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">stackingClassifier</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">result_n_3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">clf_n_3</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;P1&#39;</span><span class="p">])</span>
+    <span class="n">result_n_5</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">clf_n_5</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;P2&#39;</span><span class="p">])</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">result_n_3</span><span class="p">,</span> <span class="n">result_n_5</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">combined_pred</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">prefix</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;P1&quot;</span><span class="p">,</span><span class="s2">&quot;P2&quot;</span><span class="p">],</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;P1&quot;</span><span class="p">,</span><span class="s2">&quot;P2&quot;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;P1_BARBUNYA&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">combined_pred</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">combined_pred</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;P1_BARBUNYA&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;P1_BOMBAY&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">combined_pred</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">combined_pred</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;P1_BOMBAY&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;P1_CALI&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">combined_pred</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">combined_pred</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;P1_CALI&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;P1_DERMASON&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">combined_pred</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">combined_pred</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;P1_DERMASON&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;P1_HOROZ&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">combined_pred</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">combined_pred</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;P1_HOROZ&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;P1_SEKER&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">combined_pred</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">combined_pred</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;P1_SEKER&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;P1_SIRA&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">combined_pred</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">combined_pred</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;P1_SIRA&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;P2_BARBUNYA&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">combined_pred</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">combined_pred</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="s2">&quot;P2_BARBUNYA&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;P2_BOMBAY&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">combined_pred</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">combined_pred</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;P2_BOMBAY&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;P2_CALI&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">combined_pred</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">combined_pred</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="s2">&quot;P2_CALI&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;P2_DERMASON&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">combined_pred</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">combined_pred</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;P2_DERMASON&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;P2_HOROZ&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">combined_pred</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">combined_pred</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="s2">&quot;P2_HOROZ&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;P2_SEKER&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">combined_pred</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">combined_pred</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="s2">&quot;P2_SEKER&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;P2_SIRA&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">combined_pred</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">combined_pred</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="s2">&quot;P2_SIRA&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">clf_nb</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">combined_pred</span><span class="p">),</span> <span class="n">clf_nb</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">df_cleaned</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Class&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">new_data_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">prediction</span><span class="p">,</span> <span class="n">score</span> <span class="o">=</span> <span class="n">stackingClassifier</span><span class="p">(</span><span class="n">new_data_scaled</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;prediction : </span><span class="si">{</span><span class="n">prediction</span><span class="si">}</span><span class="s1">, accuration : </span><span class="si">{</span><span class="n">score</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>prediction : [&#39;SEKER&#39;], accuration : 0.9486347145312202
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="bagging-classifier">
+<h2>BAGGING CLASSIFIER<a class="headerlink" href="#bagging-classifier" title="Link to this heading">#</a></h2>
+<img src="_images/bagging.png" width="" align="" /><section id="membuat-sample-data-bootsrap">
+<h3>Membuat sample data bootsrap<a class="headerlink" href="#membuat-sample-data-bootsrap" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span> <span class="n">y_train</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">B1</span> <span class="o">=</span> <span class="n">df_train</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">B1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Area</th>
+      <th>Perimeter</th>
+      <th>MajorAxisLength</th>
+      <th>MinorAxisLength</th>
+      <th>AspectRation</th>
+      <th>Eccentricity</th>
+      <th>ConvexArea</th>
+      <th>EquivDiameter</th>
+      <th>Extent</th>
+      <th>Solidity</th>
+      <th>roundness</th>
+      <th>Compactness</th>
+      <th>ShapeFactor1</th>
+      <th>ShapeFactor2</th>
+      <th>ShapeFactor3</th>
+      <th>ShapeFactor4</th>
+      <th>Class</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1674</th>
+      <td>-0.061814</td>
+      <td>0.222351</td>
+      <td>0.332892</td>
+      <td>-0.294363</td>
+      <td>1.064195</td>
+      <td>0.977694</td>
+      <td>-0.062231</td>
+      <td>0.040215</td>
+      <td>-2.531591</td>
+      <td>-0.066844</td>
+      <td>-1.458185</td>
+      <td>-1.098393</td>
+      <td>0.212745</td>
+      <td>-0.854705</td>
+      <td>-1.088083</td>
+      <td>-1.467162</td>
+      <td>SIRA</td>
+    </tr>
+    <tr>
+      <th>8627</th>
+      <td>-0.338267</td>
+      <td>-0.342746</td>
+      <td>-0.323312</td>
+      <td>-0.300028</td>
+      <td>-0.139156</td>
+      <td>0.138497</td>
+      <td>-0.333907</td>
+      <td>-0.315040</td>
+      <td>-0.590968</td>
+      <td>-0.820104</td>
+      <td>0.250424</td>
+      <td>0.029586</td>
+      <td>0.186888</td>
+      <td>0.016841</td>
+      <td>-0.008788</td>
+      <td>0.099332</td>
+      <td>SIRA</td>
+    </tr>
+    <tr>
+      <th>7858</th>
+      <td>0.489662</td>
+      <td>1.008541</td>
+      <td>0.578699</td>
+      <td>0.670601</td>
+      <td>0.034858</td>
+      <td>0.295596</td>
+      <td>0.498813</td>
+      <td>0.673103</td>
+      <td>-0.636583</td>
+      <td>-1.338831</td>
+      <td>-2.378063</td>
+      <td>-0.127781</td>
+      <td>-0.953398</td>
+      <td>-0.646444</td>
+      <td>-0.165220</td>
+      <td>0.946162</td>
+      <td>BARBUNYA</td>
+    </tr>
+    <tr>
+      <th>7735</th>
+      <td>0.377258</td>
+      <td>0.507518</td>
+      <td>0.266052</td>
+      <td>0.810484</td>
+      <td>-0.592491</td>
+      <td>-0.358318</td>
+      <td>0.375459</td>
+      <td>0.550860</td>
+      <td>0.012074</td>
+      <td>-0.025831</td>
+      <td>-0.124324</td>
+      <td>0.538652</td>
+      <td>-1.074798</td>
+      <td>-0.215167</td>
+      <td>0.510260</td>
+      <td>0.565864</td>
+      <td>BARBUNYA</td>
+    </tr>
+    <tr>
+      <th>1637</th>
+      <td>6.144013</td>
+      <td>4.620502</td>
+      <td>4.497899</td>
+      <td>4.900537</td>
+      <td>0.363742</td>
+      <td>0.553762</td>
+      <td>6.149071</td>
+      <td>4.919660</td>
+      <td>1.408579</td>
+      <td>-0.754130</td>
+      <td>-0.296554</td>
+      <td>-0.474412</td>
+      <td>-3.123455</td>
+      <td>-1.774856</td>
+      <td>-0.503092</td>
+      <td>-0.402727</td>
+      <td>BOMBAY</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>8821</th>
+      <td>-0.990309</td>
+      <td>-1.305382</td>
+      <td>-1.285979</td>
+      <td>-1.240217</td>
+      <td>-0.618694</td>
+      <td>-0.391748</td>
+      <td>-0.988246</td>
+      <td>-1.318041</td>
+      <td>-0.863097</td>
+      <td>-0.152338</td>
+      <td>0.729980</td>
+      <td>0.563982</td>
+      <td>1.910298</td>
+      <td>1.501782</td>
+      <td>0.536606</td>
+      <td>0.351558</td>
+      <td>DERMASON</td>
+    </tr>
+    <tr>
+      <th>2249</th>
+      <td>-0.914851</td>
+      <td>-1.185731</td>
+      <td>-1.142676</td>
+      <td>-1.140180</td>
+      <td>-0.460368</td>
+      <td>-0.198410</td>
+      <td>-0.913349</td>
+      <td>-1.185200</td>
+      <td>1.027843</td>
+      <td>-0.030385</td>
+      <td>0.736329</td>
+      <td>0.387466</td>
+      <td>1.674682</td>
+      <td>1.151061</td>
+      <td>0.354035</td>
+      <td>0.559233</td>
+      <td>DERMASON</td>
+    </tr>
+    <tr>
+      <th>703</th>
+      <td>0.957039</td>
+      <td>1.031568</td>
+      <td>1.045342</td>
+      <td>1.146299</td>
+      <td>0.132062</td>
+      <td>0.376796</td>
+      <td>0.949506</td>
+      <td>1.151876</td>
+      <td>1.303429</td>
+      <td>0.390554</td>
+      <td>0.087340</td>
+      <td>-0.262162</td>
+      <td>-1.335479</td>
+      <td>-0.907245</td>
+      <td>-0.297299</td>
+      <td>-0.726749</td>
+      <td>CALI</td>
+    </tr>
+    <tr>
+      <th>2932</th>
+      <td>-0.342111</td>
+      <td>-0.182741</td>
+      <td>0.095207</td>
+      <td>-0.754019</td>
+      <td>1.491203</td>
+      <td>1.175821</td>
+      <td>-0.339838</td>
+      <td>-0.320206</td>
+      <td>-1.089804</td>
+      <td>-0.437987</td>
+      <td>-1.064124</td>
+      <td>-1.416129</td>
+      <td>0.942386</td>
+      <td>-0.841754</td>
+      <td>-1.374492</td>
+      <td>-1.076017</td>
+      <td>HOROZ</td>
+    </tr>
+    <tr>
+      <th>7219</th>
+      <td>-0.470199</td>
+      <td>-0.538494</td>
+      <td>-0.494502</td>
+      <td>-0.474800</td>
+      <td>-0.196346</td>
+      <td>0.083266</td>
+      <td>-0.472844</td>
+      <td>-0.496372</td>
+      <td>0.773703</td>
+      <td>0.580649</td>
+      <td>0.513810</td>
+      <td>0.090971</td>
+      <td>0.445763</td>
+      <td>0.199515</td>
+      <td>0.052747</td>
+      <td>0.167607</td>
+      <td>DERMASON</td>
+    </tr>
+  </tbody>
+</table>
+<p>10474 rows × 17 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">B2</span> <span class="o">=</span> <span class="n">df_train</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">B2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Area</th>
+      <th>Perimeter</th>
+      <th>MajorAxisLength</th>
+      <th>MinorAxisLength</th>
+      <th>AspectRation</th>
+      <th>Eccentricity</th>
+      <th>ConvexArea</th>
+      <th>EquivDiameter</th>
+      <th>Extent</th>
+      <th>Solidity</th>
+      <th>roundness</th>
+      <th>Compactness</th>
+      <th>ShapeFactor1</th>
+      <th>ShapeFactor2</th>
+      <th>ShapeFactor3</th>
+      <th>ShapeFactor4</th>
+      <th>Class</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>4879</th>
+      <td>-0.414609</td>
+      <td>-0.478011</td>
+      <td>-0.586155</td>
+      <td>-0.179820</td>
+      <td>-0.786685</td>
+      <td>-0.621149</td>
+      <td>-0.412993</td>
+      <td>-0.418925</td>
+      <td>-0.930646</td>
+      <td>-0.296968</td>
+      <td>0.604612</td>
+      <td>0.751410</td>
+      <td>0.026140</td>
+      <td>0.617476</td>
+      <td>0.733079</td>
+      <td>-0.192012</td>
+      <td>SIRA</td>
+    </tr>
+    <tr>
+      <th>9655</th>
+      <td>-0.109477</td>
+      <td>-0.032955</td>
+      <td>0.073424</td>
+      <td>-0.145523</td>
+      <td>0.345246</td>
+      <td>0.540425</td>
+      <td>-0.109415</td>
+      <td>-0.018912</td>
+      <td>0.719683</td>
+      <td>-0.124845</td>
+      <td>-0.043969</td>
+      <td>-0.458451</td>
+      <td>-0.014356</td>
+      <td>-0.477027</td>
+      <td>-0.487736</td>
+      <td>-0.454092</td>
+      <td>SIRA</td>
+    </tr>
+    <tr>
+      <th>9606</th>
+      <td>-0.405730</td>
+      <td>-0.513557</td>
+      <td>-0.573681</td>
+      <td>-0.181408</td>
+      <td>-0.762178</td>
+      <td>-0.585959</td>
+      <td>-0.410245</td>
+      <td>-0.406698</td>
+      <td>0.947780</td>
+      <td>0.882838</td>
+      <td>1.033990</td>
+      <td>0.740449</td>
+      <td>0.012294</td>
+      <td>0.598052</td>
+      <td>0.721514</td>
+      <td>0.570936</td>
+      <td>SEKER</td>
+    </tr>
+    <tr>
+      <th>4705</th>
+      <td>-0.542732</td>
+      <td>-0.669731</td>
+      <td>-0.773409</td>
+      <td>-0.323280</td>
+      <td>-0.941100</td>
+      <td>-0.858127</td>
+      <td>-0.539934</td>
+      <td>-0.599883</td>
+      <td>0.414922</td>
+      <td>-0.506352</td>
+      <td>0.867307</td>
+      <td>0.936992</td>
+      <td>0.232649</td>
+      <td>0.940937</td>
+      <td>0.930270</td>
+      <td>-0.469920</td>
+      <td>DERMASON</td>
+    </tr>
+    <tr>
+      <th>7029</th>
+      <td>-0.298837</td>
+      <td>-0.313945</td>
+      <td>-0.275761</td>
+      <td>-0.253378</td>
+      <td>-0.121290</td>
+      <td>0.155369</td>
+      <td>-0.301032</td>
+      <td>-0.262442</td>
+      <td>0.547037</td>
+      <td>0.352885</td>
+      <td>0.415854</td>
+      <td>0.020885</td>
+      <td>0.112101</td>
+      <td>-0.026998</td>
+      <td>-0.017487</td>
+      <td>0.517596</td>
+      <td>SIRA</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>751</th>
+      <td>0.906144</td>
+      <td>1.421781</td>
+      <td>1.221879</td>
+      <td>0.818833</td>
+      <td>0.793650</td>
+      <td>0.830807</td>
+      <td>0.923233</td>
+      <td>1.101813</td>
+      <td>-1.442069</td>
+      <td>-2.022265</td>
+      <td>-2.286741</td>
+      <td>-0.831247</td>
+      <td>-1.083178</td>
+      <td>-1.144032</td>
+      <td>-0.841285</td>
+      <td>0.621939</td>
+      <td>BARBUNYA</td>
+    </tr>
+    <tr>
+      <th>8537</th>
+      <td>0.573591</td>
+      <td>0.685046</td>
+      <td>0.787753</td>
+      <td>0.679652</td>
+      <td>0.336949</td>
+      <td>0.534400</td>
+      <td>0.596800</td>
+      <td>0.762439</td>
+      <td>0.203435</td>
+      <td>-2.884864</td>
+      <td>0.000759</td>
+      <td>-0.502916</td>
+      <td>-0.896762</td>
+      <td>-0.872496</td>
+      <td>-0.530465</td>
+      <td>-2.751131</td>
+      <td>CALI</td>
+    </tr>
+    <tr>
+      <th>7137</th>
+      <td>0.974662</td>
+      <td>1.154230</td>
+      <td>1.375169</td>
+      <td>0.797435</td>
+      <td>1.047498</td>
+      <td>0.969154</td>
+      <td>0.954767</td>
+      <td>1.169103</td>
+      <td>1.275048</td>
+      <td>1.591218</td>
+      <td>-0.542766</td>
+      <td>-1.049515</td>
+      <td>-1.056594</td>
+      <td>-1.256215</td>
+      <td>-1.043336</td>
+      <td>0.182095</td>
+      <td>CALI</td>
+    </tr>
+    <tr>
+      <th>3780</th>
+      <td>-0.440908</td>
+      <td>-0.499849</td>
+      <td>-0.493213</td>
+      <td>-0.396138</td>
+      <td>-0.313385</td>
+      <td>-0.035898</td>
+      <td>-0.443120</td>
+      <td>-0.455366</td>
+      <td>0.722441</td>
+      <td>0.467162</td>
+      <td>0.502175</td>
+      <td>0.228310</td>
+      <td>0.314378</td>
+      <td>0.263204</td>
+      <td>0.191467</td>
+      <td>0.687947</td>
+      <td>SIRA</td>
+    </tr>
+    <tr>
+      <th>6097</th>
+      <td>-0.473159</td>
+      <td>-0.518323</td>
+      <td>-0.493701</td>
+      <td>-0.491274</td>
+      <td>-0.169178</td>
+      <td>0.109738</td>
+      <td>-0.474687</td>
+      <td>-0.500540</td>
+      <td>0.633544</td>
+      <td>0.357001</td>
+      <td>0.296417</td>
+      <td>0.073227</td>
+      <td>0.461166</td>
+      <td>0.190411</td>
+      <td>0.034929</td>
+      <td>0.624790</td>
+      <td>DERMASON</td>
+    </tr>
+  </tbody>
+</table>
+<p>10474 rows × 17 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">B3</span> <span class="o">=</span> <span class="n">df_train</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">B3</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Area</th>
+      <th>Perimeter</th>
+      <th>MajorAxisLength</th>
+      <th>MinorAxisLength</th>
+      <th>AspectRation</th>
+      <th>Eccentricity</th>
+      <th>ConvexArea</th>
+      <th>EquivDiameter</th>
+      <th>Extent</th>
+      <th>Solidity</th>
+      <th>roundness</th>
+      <th>Compactness</th>
+      <th>ShapeFactor1</th>
+      <th>ShapeFactor2</th>
+      <th>ShapeFactor3</th>
+      <th>ShapeFactor4</th>
+      <th>Class</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3582</th>
+      <td>-0.254848</td>
+      <td>-0.242778</td>
+      <td>-0.175439</td>
+      <td>-0.249534</td>
+      <td>0.056315</td>
+      <td>0.313903</td>
+      <td>-0.257769</td>
+      <td>-0.204566</td>
+      <td>-0.968596</td>
+      <td>0.449138</td>
+      <td>0.263174</td>
+      <td>-0.164769</td>
+      <td>0.112017</td>
+      <td>-0.186297</td>
+      <td>-0.201712</td>
+      <td>0.269723</td>
+      <td>SIRA</td>
+    </tr>
+    <tr>
+      <th>4881</th>
+      <td>4.324243</td>
+      <td>3.436658</td>
+      <td>2.999252</td>
+      <td>4.408769</td>
+      <td>-0.567052</td>
+      <td>-0.326426</td>
+      <td>4.318220</td>
+      <td>3.800813</td>
+      <td>0.494068</td>
+      <td>-0.281331</td>
+      <td>0.260213</td>
+      <td>0.453577</td>
+      <td>-2.962042</td>
+      <td>-1.319895</td>
+      <td>0.422133</td>
+      <td>-1.716814</td>
+      <td>BOMBAY</td>
+    </tr>
+    <tr>
+      <th>4296</th>
+      <td>4.841155</td>
+      <td>4.002852</td>
+      <td>3.647424</td>
+      <td>4.309769</td>
+      <td>0.069776</td>
+      <td>0.325275</td>
+      <td>4.844111</td>
+      <td>4.133797</td>
+      <td>0.171512</td>
+      <td>-0.677888</td>
+      <td>-0.732674</td>
+      <td>-0.223947</td>
+      <td>-2.930159</td>
+      <td>-1.597155</td>
+      <td>-0.259879</td>
+      <td>-1.711887</td>
+      <td>BOMBAY</td>
+    </tr>
+    <tr>
+      <th>3238</th>
+      <td>-0.127644</td>
+      <td>-0.001004</td>
+      <td>0.142512</td>
+      <td>-0.254469</td>
+      <td>0.645495</td>
+      <td>0.741969</td>
+      <td>-0.126372</td>
+      <td>-0.041667</td>
+      <td>-1.703967</td>
+      <td>-0.312572</td>
+      <td>-0.446358</td>
+      <td>-0.749072</td>
+      <td>0.154742</td>
+      <td>-0.628165</td>
+      <td>-0.764268</td>
+      <td>-1.402001</td>
+      <td>SIRA</td>
+    </tr>
+    <tr>
+      <th>2363</th>
+      <td>-0.252501</td>
+      <td>-0.190159</td>
+      <td>-0.130007</td>
+      <td>-0.283338</td>
+      <td>0.191992</td>
+      <td>0.424721</td>
+      <td>-0.248252</td>
+      <td>-0.201501</td>
+      <td>0.844758</td>
+      <td>-0.794795</td>
+      <td>-0.141485</td>
+      <td>-0.317760</td>
+      <td>0.178777</td>
+      <td>-0.283440</td>
+      <td>-0.351540</td>
+      <td>-0.626097</td>
+      <td>SIRA</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>6812</th>
+      <td>-0.635676</td>
+      <td>-0.751364</td>
+      <td>-0.786629</td>
+      <td>-0.628165</td>
+      <td>-0.535477</td>
+      <td>-0.287592</td>
+      <td>-0.634770</td>
+      <td>-0.736964</td>
+      <td>0.608599</td>
+      <td>-0.055590</td>
+      <td>0.452070</td>
+      <td>0.475558</td>
+      <td>0.681713</td>
+      <td>0.708270</td>
+      <td>0.444850</td>
+      <td>0.677304</td>
+      <td>DERMASON</td>
+    </tr>
+    <tr>
+      <th>3836</th>
+      <td>-0.936998</td>
+      <td>-1.135431</td>
+      <td>-1.018639</td>
+      <td>-1.373741</td>
+      <td>0.294060</td>
+      <td>0.502831</td>
+      <td>-0.935098</td>
+      <td>-1.223588</td>
+      <td>-0.657851</td>
+      <td>-0.136499</td>
+      <td>-0.205068</td>
+      <td>-0.387162</td>
+      <td>2.233651</td>
+      <td>0.533782</td>
+      <td>-0.418914</td>
+      <td>0.581899</td>
+      <td>DERMASON</td>
+    </tr>
+    <tr>
+      <th>2286</th>
+      <td>-0.625538</td>
+      <td>-0.668760</td>
+      <td>-0.606409</td>
+      <td>-0.816188</td>
+      <td>0.145421</td>
+      <td>0.387617</td>
+      <td>-0.625019</td>
+      <td>-0.721754</td>
+      <td>-1.291607</td>
+      <td>0.026951</td>
+      <td>-0.192544</td>
+      <td>-0.250247</td>
+      <td>1.021039</td>
+      <td>0.146155</td>
+      <td>-0.285644</td>
+      <td>0.356354</td>
+      <td>DERMASON</td>
+    </tr>
+    <tr>
+      <th>9597</th>
+      <td>-0.386951</td>
+      <td>-0.546818</td>
+      <td>-0.722774</td>
+      <td>0.088809</td>
+      <td>-1.348125</td>
+      <td>-1.644071</td>
+      <td>-0.393557</td>
+      <td>-0.380966</td>
+      <td>0.446288</td>
+      <td>1.261832</td>
+      <td>1.572433</td>
+      <td>1.520803</td>
+      <td>-0.336378</td>
+      <td>1.197573</td>
+      <td>1.567827</td>
+      <td>0.868992</td>
+      <td>SEKER</td>
+    </tr>
+    <tr>
+      <th>9552</th>
+      <td>-0.095019</td>
+      <td>0.094324</td>
+      <td>0.503075</td>
+      <td>-0.563022</td>
+      <td>1.911485</td>
+      <td>1.338655</td>
+      <td>-0.101339</td>
+      <td>-0.000889</td>
+      <td>1.327266</td>
+      <td>0.878465</td>
+      <td>-0.857033</td>
+      <td>-1.687659</td>
+      <td>0.586747</td>
+      <td>-1.124161</td>
+      <td>-1.613115</td>
+      <td>0.133958</td>
+      <td>HOROZ</td>
+    </tr>
+  </tbody>
+</table>
+<p>10474 rows × 17 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">B1_x</span> <span class="o">=</span> <span class="n">B1</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;Class&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">B1_y</span> <span class="o">=</span> <span class="n">B1</span><span class="p">[</span><span class="s1">&#39;Class&#39;</span><span class="p">]</span>
+
+<span class="n">M1</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
+<span class="n">M1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">B1_x</span><span class="p">,</span> <span class="n">B1_y</span><span class="p">)</span>
+
+<span class="c1"># # saving model with joblib</span>
+<span class="c1"># joblib.dump(M1, &#39;bagging/m1.joblib&#39;)</span>
+
+<span class="n">M1_predict</span> <span class="o">=</span> <span class="n">M1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_train</span><span class="p">)</span>
+
+<span class="n">M1_result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">M1_predict</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;P1&#39;</span><span class="p">])</span>
+
+<span class="c1"># M1.score(x_test, y_test)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/shared-libs/python3.9/py/lib/python3.9/site-packages/sklearn/base.py:450: UserWarning: X does not have valid feature names, but GaussianNB was fitted with feature names
+  warnings.warn(
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">B2_x</span> <span class="o">=</span> <span class="n">B2</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;Class&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">B2_y</span> <span class="o">=</span> <span class="n">B2</span><span class="p">[</span><span class="s1">&#39;Class&#39;</span><span class="p">]</span>
+
+<span class="n">M2</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
+<span class="n">M2</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">B2_x</span><span class="p">,</span> <span class="n">B2_y</span><span class="p">)</span>
+
+<span class="c1"># joblib.dump(M2, &#39;bagging/m2.joblib&#39;)</span>
+
+<span class="n">M2_predict</span> <span class="o">=</span> <span class="n">M2</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_train</span><span class="p">)</span>
+
+<span class="n">M2_result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">M2_predict</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;P2&#39;</span><span class="p">])</span>
+
+<span class="c1"># M2.score(x_test, y_test)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/shared-libs/python3.9/py/lib/python3.9/site-packages/sklearn/base.py:450: UserWarning: X does not have valid feature names, but GaussianNB was fitted with feature names
+  warnings.warn(
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">B3_x</span> <span class="o">=</span> <span class="n">B3</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;Class&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">B3_y</span> <span class="o">=</span> <span class="n">B3</span><span class="p">[</span><span class="s1">&#39;Class&#39;</span><span class="p">]</span>
+
+<span class="n">M3</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
+<span class="n">M3</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">B3_x</span><span class="p">,</span> <span class="n">B3_y</span><span class="p">)</span>
+
+<span class="c1"># saving model with joblib</span>
+<span class="c1"># joblib.dump(M3, &#39;bagging/m3.joblib&#39;)</span>
+
+<span class="n">M3_predict</span> <span class="o">=</span> <span class="n">M3</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_train</span><span class="p">)</span>
+
+<span class="n">M3_result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">M3_predict</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;P3&#39;</span><span class="p">])</span>
+
+<span class="c1"># M3.score(x_test, y_test)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/shared-libs/python3.9/py/lib/python3.9/site-packages/sklearn/base.py:450: UserWarning: X does not have valid feature names, but GaussianNB was fitted with feature names
+  warnings.warn(
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_combined</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">M1_result</span><span class="p">,</span> <span class="n">M2_result</span><span class="p">,</span> <span class="n">M3_result</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># x_combined</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">x_combined</span><span class="p">,</span><span class="n">prefix</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;P1&quot;</span><span class="p">,</span><span class="s2">&quot;P2&quot;</span><span class="p">,</span> <span class="s2">&quot;P3&quot;</span><span class="p">],</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;P1&quot;</span><span class="p">,</span><span class="s2">&quot;P2&quot;</span><span class="p">,</span> <span class="s2">&quot;P3&quot;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
+
+<span class="n">X</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>P1_BARBUNYA</th>
+      <th>P1_BOMBAY</th>
+      <th>P1_CALI</th>
+      <th>P1_DERMASON</th>
+      <th>P1_HOROZ</th>
+      <th>P1_SEKER</th>
+      <th>P1_SIRA</th>
+      <th>P2_BARBUNYA</th>
+      <th>P2_BOMBAY</th>
+      <th>P2_CALI</th>
+      <th>...</th>
+      <th>P2_HOROZ</th>
+      <th>P2_SEKER</th>
+      <th>P2_SIRA</th>
+      <th>P3_BARBUNYA</th>
+      <th>P3_BOMBAY</th>
+      <th>P3_CALI</th>
+      <th>P3_DERMASON</th>
+      <th>P3_HOROZ</th>
+      <th>P3_SEKER</th>
+      <th>P3_SIRA</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>10469</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>10470</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>10471</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>10472</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>10473</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>10474 rows × 21 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clf_knn</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="n">clf_knn</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># saving model with joblib</span>
+<span class="c1"># joblib.dump(clf_knn, &#39;Notebook1/Bagging/aggregation.joblib&#39;)</span>
+
+<span class="n">clf_knn</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9022341034943671
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="evaluasi">
+<h1>EVALUASI<a class="headerlink" href="#evaluasi" title="Link to this heading">#</a></h1>
+<p>Setelah di lakukan modeling dengan data, ternyata modeling dengan stacking menghasilkan akurasi yang paling besar yaitu 94%.</p>
+<a style='text-decoration:none;line-height:16px;display:flex;color:#5B5B62;padding:10px;justify-content:end;' href='https://deepnote.com?utm_source=created-in-deepnote-cell&projectId=a43a5732-d5e0-4883-b2ac-a460445e683a' target="_blank">
+<img alt='Created in deepnote.com' style='display:inline;max-height:16px;margin:0px;margin-right:7.5px;' src='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iODBweCIgaGVpZ2h0PSI4MHB4IiB2aWV3Qm94PSIwIDAgODAgODAiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8IS0tIEdlbmVyYXRvcjogU2tldGNoIDU0LjEgKDc2NDkwKSAtIGh0dHBzOi8vc2tldGNoYXBwLmNvbSAtLT4KICAgIDx0aXRsZT5Hcm91cCAzPC90aXRsZT4KICAgIDxkZXNjPkNyZWF0ZWQgd2l0aCBTa2V0Y2guPC9kZXNjPgogICAgPGcgaWQ9IkxhbmRpbmciIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgICAgIDxnIGlkPSJBcnRib2FyZCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTEyMzUuMDAwMDAwLCAtNzkuMDAwMDAwKSI+CiAgICAgICAgICAgIDxnIGlkPSJHcm91cC0zIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMjM1LjAwMDAwMCwgNzkuMDAwMDAwKSI+CiAgICAgICAgICAgICAgICA8cG9seWdvbiBpZD0iUGF0aC0yMCIgZmlsbD0iIzAyNjVCNCIgcG9pbnRzPSIyLjM3NjIzNzYyIDgwIDM4LjA0NzY2NjcgODAgNTcuODIxNzgyMiA3My44MDU3NTkyIDU3LjgyMTc4MjIgMzIuNzU5MjczOSAzOS4xNDAyMjc4IDMxLjY4MzE2ODMiPjwvcG9seWdvbj4KICAgICAgICAgICAgICAgIDxwYXRoIGQ9Ik0zNS4wMDc3MTgsODAgQzQyLjkwNjIwMDcsNzYuNDU0OTM1OCA0Ny41NjQ5MTY3LDcxLjU0MjI2NzEgNDguOTgzODY2LDY1LjI2MTk5MzkgQzUxLjExMjI4OTksNTUuODQxNTg0MiA0MS42NzcxNzk1LDQ5LjIxMjIyODQgMjUuNjIzOTg0Niw0OS4yMTIyMjg0IEMyNS40ODQ5Mjg5LDQ5LjEyNjg0NDggMjkuODI2MTI5Niw0My4yODM4MjQ4IDM4LjY0NzU4NjksMzEuNjgzMTY4MyBMNzIuODcxMjg3MSwzMi41NTQ0MjUgTDY1LjI4MDk3Myw2Ny42NzYzNDIxIEw1MS4xMTIyODk5LDc3LjM3NjE0NCBMMzUuMDA3NzE4LDgwIFoiIGlkPSJQYXRoLTIyIiBmaWxsPSIjMDAyODY4Ij48L3BhdGg+CiAgICAgICAgICAgICAgICA8cGF0aCBkPSJNMCwzNy43MzA0NDA1IEwyNy4xMTQ1MzcsMC4yNTcxMTE0MzYgQzYyLjM3MTUxMjMsLTEuOTkwNzE3MDEgODAsMTAuNTAwMzkyNyA4MCwzNy43MzA0NDA1IEM4MCw2NC45NjA0ODgyIDY0Ljc3NjUwMzgsNzkuMDUwMzQxNCAzNC4zMjk1MTEzLDgwIEM0Ny4wNTUzNDg5LDc3LjU2NzA4MDggNTMuNDE4MjY3Nyw3MC4zMTM2MTAzIDUzLjQxODI2NzcsNTguMjM5NTg4NSBDNTMuNDE4MjY3Nyw0MC4xMjg1NTU3IDM2LjMwMzk1NDQsMzcuNzMwNDQwNSAyNS4yMjc0MTcsMzcuNzMwNDQwNSBDMTcuODQzMDU4NiwzNy43MzA0NDA1IDkuNDMzOTE5NjYsMzcuNzMwNDQwNSAwLDM3LjczMDQ0MDUgWiIgaWQ9IlBhdGgtMTkiIGZpbGw9IiMzNzkzRUYiPjwvcGF0aD4KICAgICAgICAgICAgPC9nPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+' > </img>
+Created in <span style='font-weight:600;margin-left:4px;'>Deepnote</span></a></section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="notebooks.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Content with notebooks</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="markdown-notebooks.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Notebooks with MyST Markdown</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">GAUSSSIAN NAIVE BAYES CLASSIFICATION FOR PREDICTION DRY BEAN</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tujuan">TUJUAN</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-understanding">DATA UNDERSTANDING</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mengumpulkan-data">MENGUMPULKAN DATA</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mencari-data">Mencari Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menarik-data">Menarik Data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#memahami-data">MEMAHAMI DATA</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deskripsi-data">Deskripsi Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#penjelasan-fitur">Penjelasan Fitur</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-data">PLOTTING DATA</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-distribution">Data Distribution</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#d-distribution">2D Distribution</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-data">EKSPLORASI DATA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kualitas-data">KUALITAS DATA</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#missing-value">Missing Value</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#outlier-data">Outlier Data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preprocessing">DATA PREPROCESSING</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#local-outlier-factor">LOCAL OUTLIER FACTOR</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#konsep-local-outlier-factor">Konsep Local Outlier Factor</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#check-outlier">CHECK OUTLIER</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-modeling">DATA MODELING</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membagi-data-feature-dan-class">Membagi Data (feature dan class)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-train">Data Train</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-test">Data Test</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-naive-bayes-classification">GAUSSIAN NAIVE BAYES CLASSIFICATION</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k-nearest-neighboor">K-NEAREST NEIGHBOOR</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ensemble-learning">ENSEMBLE LEARNING</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stacking-classifier">STACKING CLASSIFIER</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#make-knn-model-with-n-3">Make KNN model with n = 3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#make-knn-model-with-n-5">Make KNN model with n = 5</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagging-classifier">BAGGING CLASSIFIER</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-sample-data-bootsrap">Membuat sample data bootsrap</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluasi">EVALUASI</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
